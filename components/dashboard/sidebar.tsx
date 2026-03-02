@@ -17,6 +17,7 @@ import {
   Check,
   Plus,
   User,
+  Globe,
 } from "lucide-react";
 import {
   Sidebar,
@@ -47,6 +48,7 @@ const navItems = [
   { title: "Templates", icon: LayoutGrid, iconColor: "text-blue-500" },
   { title: "Notification", icon: Bell, iconColor: "text-amber-500" },
   { title: "Dashboard", icon: LayoutDashboard, isActive: true, iconColor: "text-primary" },
+  { title: "Sites", icon: Globe, iconColor: "text-[#4353FF]" },
   { title: "Inbox", icon: Inbox, iconColor: "text-cyan-500" },
   { title: "Project", icon: FolderKanban, iconColor: "text-emerald-500" },
   { title: "Calendar", icon: Calendar, iconColor: "text-orange-500" },
@@ -143,7 +145,7 @@ export function DashboardSidebar(
       </SidebarContent>
 
       <SidebarFooter className="px-2 pb-3 group-data-[collapsible=icon]:hidden">
-        <div className="group/sidebar relative flex flex-col gap-2 rounded-lg border p-4 text-sm w-full bg-background">
+        {/* <div className="group/sidebar relative flex flex-col gap-2 rounded-lg border p-4 text-sm w-full bg-background">
           <div className="text-balance text-lg font-semibold leading-tight group-hover/sidebar:underline">
             Open-source layouts by lndev-ui
           </div>
@@ -168,7 +170,7 @@ export function DashboardSidebar(
               square.lndev.me
             </Link>
           </Button>
-        </div>
+        </div> */}
       </SidebarFooter>
     </Sidebar>
   );

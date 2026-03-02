@@ -1,0 +1,4 @@
+onlyBuiltDependencies:
+  - classic-level
+  - sharp
+  - unrs-resolver

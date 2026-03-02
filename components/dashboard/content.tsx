@@ -7,6 +7,8 @@ import { StatsCards } from "./stats-cards";
 import { TodaysTasks } from "./todays-tasks";
 import { PerformanceChart } from "./performance-chart";
 import { ProjectsTable } from "./projects-table";
+import { ConnectWebflowButton } from "@/components/webflow/connect-button";
+import { SitesList } from "@/components/webflow/sites-list";
 
 function WelcomeSection() {
   const { userName, tasksDueToday, overdueTasks, upcomingDeadlines } =
@@ -24,6 +26,7 @@ function WelcomeSection() {
         </p>
       </div>
       <div className="flex items-center gap-2">
+        <ConnectWebflowButton />
         <Button variant="outline" size="sm" className="h-9 gap-1.5">
           <Download className="size-4" />
           Export
@@ -41,17 +44,18 @@ export function DashboardContent() {
   return (
     <main className="w-full overflow-y-auto overflow-x-hidden p-4 h-full">
       <div className="mx-auto w-full space-y-6">
-      <WelcomeSection />
-      <StatsCards />
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
-        <div className="lg:col-span-2">
-          <TodaysTasks />
+        <WelcomeSection />
+        <StatsCards />
+        <SitesList />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+          <div className="lg:col-span-2">
+            <TodaysTasks />
+          </div>
+          <div>
+            <PerformanceChart />
+          </div>
         </div>
-        <div>
-          <PerformanceChart />
-        </div>
-      </div>
-      <ProjectsTable />
+        <ProjectsTable />
       </div>
     </main>
   );
