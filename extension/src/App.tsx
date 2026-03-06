@@ -1,13 +1,9 @@
-import { useEffect } from 'react'
-
 const DATA_CLIENT_URL = (import.meta as any).env?.VITE_DATA_CLIENT_URL || 'http://localhost:3000'
 
 function App() {
-  useEffect(() => {
-    if (typeof window !== "undefined" && "webflow" in window) {
-      (window as Record<string, any>).webflow.setExtensionSize("large")
-    }
-  }, [])
+  if (typeof window !== "undefined" && "webflow" in window) {
+    (window as Record<string, any>).webflow.setExtensionSize("large")
+  }
 
   return (
     <iframe
