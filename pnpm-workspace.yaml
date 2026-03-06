@@ -2,3 +2,6 @@ onlyBuiltDependencies:
   - classic-level
   - sharp
   - unrs-resolver
+
+packages:
+  - "extension"

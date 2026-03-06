@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import {
-  Search,
+  // Search,
   Sparkles,
   LayoutGrid,
   Bell,
@@ -30,7 +30,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -43,11 +43,11 @@ import {
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { title: "Search", icon: Search, shortcut: "/", iconColor: "text-muted-foreground" },
+  // { title: "Search", icon: Search, shortcut: "/", iconColor: "text-muted-foreground" },
+  { title: "Dashboard", icon: LayoutDashboard, isActive: true, iconColor: "text-primary" },
   { title: "Taskplus AI", icon: Sparkles, iconColor: "text-violet-500" },
   { title: "Templates", icon: LayoutGrid, iconColor: "text-blue-500" },
   { title: "Notification", icon: Bell, iconColor: "text-amber-500" },
-  { title: "Dashboard", icon: LayoutDashboard, isActive: true, iconColor: "text-primary" },
   { title: "Sites", icon: Globe, iconColor: "text-[#4353FF]" },
   { title: "Inbox", icon: Inbox, iconColor: "text-cyan-500" },
   { title: "Project", icon: FolderKanban, iconColor: "text-emerald-500" },
@@ -130,9 +130,9 @@ export function DashboardSidebar(
                     <Link href="#">
                       <item.icon className={cn("size-4 shrink-0", item.iconColor)} />
                       <span className="text-sm">{item.title}</span>
-                      {item.shortcut && (
+                      {"shortcut" in item && (item as any).shortcut && (
                         <span className="ml-auto flex size-5 items-center justify-center rounded bg-muted text-[10px] font-medium text-muted-foreground">
-                          {item.shortcut}
+                          {(item as Record<string, any>).shortcut}
                         </span>
                       )}
                     </Link>
