@@ -1,16 +1,20 @@
 import { Level } from "level";
 import path from "path";
 
-// LevelDB instance for storing tokens
-// Data directory lives at project root /data
-let db: Level<string, string> | null = null;
+// Singleton promise — ensures the DB is opened exactly once,
+// even when multiple API routes call getDb() concurrently.
+let dbPromise: Promise<Level<string, string>> | null = null;
 
-function getDb(): Level<string, string> {
-    if (!db) {
-        const dbPath = path.join(process.cwd(), "data");
-        db = new Level(dbPath, { valueEncoding: "json" });
+function getDb(): Promise<Level<string, string>> {
+    if (!dbPromise) {
+        dbPromise = (async () => {
+            const dbPath = path.join(process.cwd(), "data");
+            const db = new Level<string, string>(dbPath, { valueEncoding: "json" });
+            await db.open();
+            return db;
+        })();
     }
-    return db;
+    return dbPromise;
 }
 
 const TOKEN_KEY = "webflow_token";
@@ -19,21 +23,19 @@ const TOKEN_KEY = "webflow_token";
  * Store the Webflow access token
  */
 export async function storeToken(token: string): Promise<void> {
-    const store = getDb();
+    const store = await getDb();
     await store.put(TOKEN_KEY, token);
 }
 
 /**
- * Retrieve the stored Webflow access token
- * Returns null if no token is stored
+ * Retrieve the stored Webflow access token.
+ * Returns null if no token is stored.
  */
 export async function getToken(): Promise<string | null> {
     try {
-        const store = getDb();
-        const token = await store.get(TOKEN_KEY);
-        return token;
+        const store = await getDb();
+        return await store.get(TOKEN_KEY);
     } catch (error: unknown) {
-        // LevelDB throws LEVEL_NOT_FOUND when key doesn't exist
         if (
             error &&
             typeof error === "object" &&
@@ -51,17 +53,16 @@ export async function getToken(): Promise<string | null> {
  */
 export async function deleteToken(): Promise<void> {
     try {
-        const store = getDb();
+        const store = await getDb();
         await store.del(TOKEN_KEY);
     } catch (error: unknown) {
-        // Ignore if key doesn't exist
         if (
             error &&
             typeof error === "object" &&
             "code" in error &&
             (error as { code: string }).code === "LEVEL_NOT_FOUND"
         ) {
-            return;
+            return; // Key didn't exist, nothing to delete
         }
         throw error;
     }
