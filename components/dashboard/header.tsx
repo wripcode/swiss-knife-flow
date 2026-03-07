@@ -2,12 +2,11 @@
 
 import { usePathname } from "next/navigation";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { LayoutDashboard, LayoutGrid, Settings, type LucideIcon } from "lucide-react";
+import { LayoutDashboard, Tags, Settings, type LucideIcon } from "lucide-react";
 
 const pageMap: Record<string, { title: string; icon: LucideIcon }> = {
   "/": { title: "Dashboard", icon: LayoutDashboard },
-  // Add your tool pages here: "/your-route": { title: "Your Tool", icon: YourIcon }
-  "/menu-name": { title: "Menu Name", icon: LayoutGrid },
+  "/custom-attributes": { title: "Custom Attributes", icon: Tags },
   "/settings": { title: "Settings", icon: Settings },
 };
 

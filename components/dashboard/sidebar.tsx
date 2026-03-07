@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
   Settings,
-  LayoutGrid,
+  Tags,
 } from "lucide-react";
 import {
   Sidebar,
@@ -25,8 +25,7 @@ const topNavItems = [
 ];
 
 const toolItems = [
-  // Replace with your tool: update title, href, and icon
-  { title: "Menu Name", href: "/menu-name", icon: LayoutGrid },
+  { title: "Custom Attributes", href: "/custom-attributes", icon: Tags },
 ];
 
 export function DashboardSidebar(

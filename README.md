@@ -68,8 +68,8 @@ app/
   (app)/                    # Route group — shared sidebar + header shell layout
     layout.tsx              # SidebarProvider + DashboardSidebar + DashboardHeader
     page.tsx                # Dashboard page (/)
-    menu-name/
-      page.tsx              # Boilerplate tool page — rename to your tool's route (/menu-name)
+    custom-attributes/
+      page.tsx              # Custom Attributes tool (/custom-attributes)
   layout.tsx                # Root layout — Inter + Roboto Mono fonts, ThemeProvider (dark only)
   globals.css               # Webflow design tokens (CSS variables), base styles
   api/
@@ -120,6 +120,6 @@ components/
 
 | Tool | Route | Description |
 |---|---|---|
-| Menu Name | `/menu-name` | Boilerplate placeholder — rename and build your tool here |
+| Custom Attributes | `/custom-attributes` | Manage custom HTML attributes on Webflow elements |
 
 More tools coming soon.
