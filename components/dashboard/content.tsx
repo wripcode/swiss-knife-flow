@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { welcomeSummary } from "@/mock-data/dashboard";
 import { StatsCards } from "./stats-cards";
 import { TodaysTasks } from "./todays-tasks";
 import { PerformanceChart } from "./performance-chart";
 import { ProjectsTable } from "./projects-table";
 import { SitesList } from "@/components/webflow/sites-list";
+import { Loader2 } from "lucide-react";
 
 function WelcomeSection() {
   const [userName, setUserName] = useState(welcomeSummary.userName);
@@ -29,27 +30,10 @@ function WelcomeSection() {
   }, []);
 
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-      <div>
-        <h1 className="text-xl sm:text-2xl font-semibold tracking-tight">
-          Welcome Back, {userName}! 👋
-        </h1>
-        {/* <p className="text-sm text-muted-foreground mt-0.5">
-          {welcomeSummary.tasksDueToday} Tasks Due Today, {welcomeSummary.overdueTasks} Overdue Tasks,{" "}
-          {welcomeSummary.upcomingDeadlines} Upcoming Deadlines (This Week)
-        </p> */}
-      </div>
-      {/* <div className="flex items-center gap-2">
-        <ConnectWebflowButton />
-        <Button variant="outline" size="sm" className="h-9 gap-1.5">
-          <Download className="size-4" />
-          Export
-        </Button>
-        <Button size="sm" className="h-9 gap-1.5 bg-primary hover:bg-primary/90">
-          <Plus className="size-4" />
-          New
-        </Button>
-      </div> */}
+    <div className="flex flex-col gap-1">
+      <h1 className="text-base font-semibold tracking-tight">
+        Welcome Back, {userName}! 👋
+      </h1>
     </div>
   );
 }
@@ -59,8 +43,9 @@ export function DashboardContent() {
     <main className="w-full overflow-y-auto overflow-x-hidden p-4 h-full">
       <div className="mx-auto w-full space-y-6">
         <WelcomeSection />
-        {/* <StatsCards /> */}
-        <SitesList />
+        <Suspense fallback={<div className="flex justify-center py-8"><Loader2 className="size-4 animate-spin text-muted-foreground" /></div>}>
+          <SitesList />
+        </Suspense>
         {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
           <div className="lg:col-span-2">
             <TodaysTasks />

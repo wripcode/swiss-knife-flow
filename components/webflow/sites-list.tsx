@@ -9,7 +9,12 @@ import {
     Clock,
     Upload,
     LinkIcon,
+    Copy,
+    Check,
+    Zap,
 } from "lucide-react";
+import { useState, useCallback } from "react";
+import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useSites } from "@/hooks/use-sites";
@@ -25,32 +30,87 @@ function formatDate(dateStr?: string) {
     }).format(new Date(dateStr));
 }
 
-function SiteCard({ site }: { site: {
-    id: string;
-    displayName: string;
-    shortName: string;
-    previewUrl?: string;
-    timeZone?: string;
-    createdOn?: string;
-    lastUpdated?: string;
-    lastPublished?: string;
-} }) {
+function CopyButton({ value }: { value: string }) {
+    const [copied, setCopied] = useState(false);
+
+    const handleCopy = useCallback(() => {
+        const done = () => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 1500);
+        };
+
+        // navigator.clipboard is blocked in cross-origin iframes — use execCommand fallback
+        try {
+            const el = document.createElement("textarea");
+            el.value = value;
+            el.style.cssText = "position:fixed;top:-9999px;left:-9999px;opacity:0";
+            document.body.appendChild(el);
+            el.focus();
+            el.select();
+            document.execCommand("copy");
+            document.body.removeChild(el);
+            done();
+        } catch {
+            // Last resort — try modern API anyway
+            navigator.clipboard?.writeText(value).then(done).catch(() => {});
+        }
+    }, [value]);
+
+    return (
+        <button
+            onClick={handleCopy}
+            className="inline-flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity text-muted-foreground hover:text-foreground"
+            title="Copy to clipboard"
+        >
+            {copied
+                ? <Check className="size-3 text-primary" />
+                : <Copy className="size-3" />
+            }
+        </button>
+    );
+}
+
+function SiteCard({ site, isActive }: {
+    site: {
+        id: string;
+        displayName: string;
+        shortName: string;
+        previewUrl?: string;
+        timeZone?: string;
+        createdOn?: string;
+        lastUpdated?: string;
+        lastPublished?: string;
+    };
+    isActive?: boolean;
+}) {
     const domain = site.shortName ? `${site.shortName}.webflow.io` : null;
 
     return (
-        <div className="group flex flex-col gap-3 rounded-md border border-border bg-card p-4 transition-colors hover:bg-accent/40">
-            {/* Top row: icon + name + external link */}
-            <div className="flex items-start justify-between gap-3">
-                <div className="flex items-center gap-3 min-w-0">
-                    <div className="size-9 rounded-md bg-primary/10 flex items-center justify-center shrink-0">
-                        <Globe className="size-4 text-primary" />
+        <div className={`group flex flex-col gap-2.5 rounded-md border bg-card p-3 transition-colors hover:bg-accent/40 ${
+            isActive ? "border-primary/50 bg-primary/5" : "border-border"
+        }`}>
+            {/* Active indicator + top row */}
+            {isActive && (
+                <div className="flex items-center gap-1.5 text-[11px]">
+                    <Zap className="size-3 text-primary" />
+                    <span className="text-primary font-medium">Current Project</span>
+                </div>
+            )}
+
+            {/* Top row: icon + name + badge + link */}
+            <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2 min-w-0">
+                    <div className={`size-7 rounded-md flex items-center justify-center shrink-0 ${
+                        isActive ? "bg-primary/20" : "bg-primary/10"
+                    }`}>
+                        <Globe className="size-3.5 text-primary" />
                     </div>
                     <div className="min-w-0">
-                        <p className="text-sm font-semibold text-foreground truncate leading-tight">
+                        <p className="text-[11px] font-medium text-foreground truncate leading-tight">
                             {site.displayName || site.shortName || site.id}
                         </p>
                         {domain && (
-                            <p className="text-xs text-muted-foreground truncate mt-0.5">
+                            <p className="text-[11px] text-muted-foreground truncate">
                                 {domain}
                             </p>
                         )}
@@ -60,14 +120,14 @@ function SiteCard({ site }: { site: {
                     {site.lastPublished ? (
                         <Badge
                             variant="secondary"
-                            className="text-xs px-1.5 py-0.5 rounded-sm font-normal bg-primary/10 text-primary border-0"
+                            className="text-[11px] px-1.5 py-0 rounded-sm font-normal bg-primary/10 text-primary border-0"
                         >
                             Published
                         </Badge>
                     ) : (
                         <Badge
                             variant="secondary"
-                            className="text-xs px-1.5 py-0.5 rounded-sm font-normal bg-muted text-muted-foreground border-0"
+                            className="text-[11px] px-1.5 py-0 rounded-sm font-normal bg-muted text-muted-foreground border-0"
                         >
                             Draft
                         </Badge>
@@ -77,38 +137,44 @@ function SiteCard({ site }: { site: {
                             variant="ghost"
                             size="icon"
                             asChild
-                            className="size-7 opacity-0 group-hover:opacity-100 transition-opacity"
+                            className="size-6 opacity-0 group-hover:opacity-100 transition-opacity"
                         >
                             <a href={`https://${site.shortName}.webflow.io`} target="_blank" rel="noopener noreferrer">
-                                <ExternalLink className="size-3.5" />
+                                <ExternalLink className="size-3" />
                             </a>
                         </Button>
                     )}
                 </div>
             </div>
 
+            {/* Site ID row */}
+            <div className="flex items-center gap-1 text-[11px] font-mono text-muted-foreground">
+                SiteId:<span className="truncate opacity-60">{site.id}</span>
+                <CopyButton value={site.id} />
+            </div>
+
             {/* Meta grid — 2 columns */}
-            <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs text-muted-foreground">
+            <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
                 {site.createdOn && (
-                    <span className="flex items-center gap-1.5">
+                    <span className="flex items-center gap-1">
                         <Calendar className="size-3 shrink-0" />
                         Created {formatDate(site.createdOn)}
                     </span>
                 )}
                 {site.lastUpdated && (
-                    <span className="flex items-center gap-1.5">
+                    <span className="flex items-center gap-1">
                         <Clock className="size-3 shrink-0" />
                         Updated {formatDate(site.lastUpdated)}
                     </span>
                 )}
                 {site.lastPublished && (
-                    <span className="flex items-center gap-1.5">
+                    <span className="flex items-center gap-1">
                         <Upload className="size-3 shrink-0" />
                         Published {formatDate(site.lastPublished)}
                     </span>
                 )}
                 {site.timeZone && (
-                    <span className="flex items-center gap-1.5">
+                    <span className="flex items-center gap-1">
                         <LinkIcon className="size-3 shrink-0" />
                         {site.timeZone}
                     </span>
@@ -122,8 +188,10 @@ function SiteCard({ site }: { site: {
  * Displays a list of connected Webflow sites, or a prompt to connect.
  */
 export function SitesList() {
-    const { authenticated, loading: authLoading, connectUrl } = useWebflowAuth();
+    const { authenticated, loading: authLoading } = useWebflowAuth();
     const { sites, loading: sitesLoading, error, refresh } = useSites(authenticated);
+    const searchParams = useSearchParams();
+    const activeSiteId = searchParams.get("siteId");
 
     if (authLoading) {
         return (
@@ -157,7 +225,7 @@ export function SitesList() {
                 <div className="flex items-center gap-2">
                     <h2 className="text-sm font-semibold text-foreground">Your Sites</h2>
                     {!sitesLoading && (
-                        <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded-sm">
+                        <span className="text-muted-foreground bg-muted px-1.5 py-0.5 rounded-sm" style={{ fontSize: "11px" }}>
                             {sites.length}
                         </span>
                     )}
@@ -199,12 +267,18 @@ export function SitesList() {
                 </p>
             )}
 
-            {/* Site cards */}
+            {/* Site cards — active site always first */}
             {!sitesLoading && !error && sites.length > 0 && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
-                    {sites.map((site) => (
-                        <SiteCard key={site.id} site={site} />
-                    ))}
+                <div className="flex flex-col gap-2">
+                    {[...sites]
+                        .sort((a, b) => (a.id === activeSiteId ? -1 : b.id === activeSiteId ? 1 : 0))
+                        .map((site) => (
+                            <SiteCard
+                                key={site.id}
+                                site={site}
+                                isActive={!!activeSiteId && site.id === activeSiteId}
+                            />
+                        ))}
                 </div>
             )}
         </div>

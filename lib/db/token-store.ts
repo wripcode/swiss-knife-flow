@@ -1,5 +1,6 @@
 import { Level } from "level";
 import path from "path";
+import fs from "fs";
 
 // Singleton promise — ensures the DB is opened exactly once,
 // even when multiple API routes call getDb() concurrently.
@@ -9,8 +10,28 @@ function getDb(): Promise<Level<string, string>> {
     if (!dbPromise) {
         dbPromise = (async () => {
             const dbPath = path.join(process.cwd(), "data");
+            const lockFile = path.join(dbPath, "LOCK");
+
             const db = new Level<string, string>(dbPath, { valueEncoding: "json" });
-            await db.open();
+
+            try {
+                await db.open();
+            } catch (err: unknown) {
+                // Stale lock file from a previous crashed/killed process
+                if (
+                    err &&
+                    typeof err === "object" &&
+                    "cause" in err &&
+                    (err as { cause?: { code?: string } }).cause?.code === "LEVEL_LOCKED"
+                ) {
+                    console.warn("[token-store] Stale LevelDB lock detected — removing and retrying...");
+                    try { fs.unlinkSync(lockFile); } catch { /* already gone */ }
+                    await db.open();
+                } else {
+                    throw err;
+                }
+            }
+
             return db;
         })();
     }
@@ -62,7 +83,7 @@ export async function deleteToken(): Promise<void> {
             "code" in error &&
             (error as { code: string }).code === "LEVEL_NOT_FOUND"
         ) {
-            return; // Key didn't exist, nothing to delete
+            return;
         }
         throw error;
     }
