@@ -21,13 +21,15 @@ import { useSites } from "@/hooks/use-sites";
 import { useWebflowAuth } from "@/hooks/use-webflow-auth";
 import { ConnectWebflowButton } from "@/components/webflow/connect-button";
 
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+});
+
 function formatDate(dateStr?: string) {
     if (!dateStr) return null;
-    return new Intl.DateTimeFormat("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-    }).format(new Date(dateStr));
+    return dateFormatter.format(new Date(dateStr));
 }
 
 function CopyButton({ value }: { value: string }) {
