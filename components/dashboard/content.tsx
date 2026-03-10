@@ -1,16 +1,11 @@
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
-import { welcomeSummary } from "@/mock-data/dashboard";
-import { StatsCards } from "./stats-cards";
-import { TodaysTasks } from "./todays-tasks";
-import { PerformanceChart } from "./performance-chart";
-import { ProjectsTable } from "./projects-table";
 import { SitesList } from "@/components/webflow/sites-list";
 import { Loader2 } from "lucide-react";
 
 function WelcomeSection() {
-  const [userName, setUserName] = useState(welcomeSummary.userName);
+  const [userName, setUserName] = useState("there");
 
   useEffect(() => {
     async function fetchUser() {
