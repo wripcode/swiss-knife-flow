@@ -50,9 +50,9 @@ The extension reads `VITE_DATA_CLIENT_URL` from `extension/.env.development` (de
 
 This is a **pnpm monorepo** with two packages:
 
-| Package | Description |
-|---|---|
-| **Root** | Next.js 16 web app — dashboard, API backend, OAuth flow |
+| Package          | Description                                                                           |
+| ---------------- | ------------------------------------------------------------------------------------- |
+| **Root**         | Next.js 16 web app — dashboard, API backend, OAuth flow                               |
 | **`extension/`** | Vite + React — runs as a [Webflow Designer Extension](https://developers.webflow.com) |
 
 ### Data Storage
@@ -108,7 +108,6 @@ components/
 ### Styling
 
 - **Tailwind CSS v4** with no `tailwind.config` — all configuration is done in CSS
-- **Webflow dark theme** exclusively — light mode has been removed
 - **CSS variables** in `app/globals.css` map to Webflow's design tokens (colors, shadows, typography)
 - **Typography**: Inter (11px / 12px, 16px line-height) + Roboto Mono (11px, for code)
 - **No shadcn/ui source edits** — all overrides use CSS variable mapping or targeted `[data-slot]` selectors in `globals.css`
@@ -118,8 +117,8 @@ components/
 
 ### Tools
 
-| Tool | Route | Description |
-|---|---|---|
-| Menu Name | `/menu-name` | Boilerplate placeholder — rename and build your tool here |
+| Tool              | Route                | Description                                       |
+| ----------------- | -------------------- | ------------------------------------------------- |
+| Custom Attributes | `/custom-attributes` | Manage custom HTML attributes on Webflow elements |
 
 More tools coming soon.
