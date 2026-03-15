@@ -22,9 +22,9 @@ export function ConnectWebflowButton() {
     if (authenticated) {
         return (
             <Button
-                variant="outline"
+                variant="default"
                 size="sm"
-                className="gap-1.5 text-[var(--wf-green-border)] border-[var(--wf-green-border)]/30 hover:bg-[var(--wf-green-bg)]"
+                className="gap-1.5 bg-primary"
                 disabled
             >
                 <Check className="size-3.5" />

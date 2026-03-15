@@ -62,7 +62,7 @@ export function DashboardSidebar(
                             : "text-muted-foreground"
                         }`}
                       />
-                      <span className="text-sm">{item.title}</span>
+                      <span className="text-xs">{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -94,7 +94,7 @@ export function DashboardSidebar(
                             : "text-muted-foreground"
                         }`}
                       />
-                      <span className="text-sm">{item.title}</span>
+                      <span className="text-xs">{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -114,7 +114,7 @@ export function DashboardSidebar(
             >
               <Link href="/settings">
                 <Settings className={`size-4 shrink-0 ${pathname === "/settings" ? "text-primary" : "text-muted-foreground"}`} />
-                <span className="text-sm">Settings</span>
+                <span className="text-xs">Settings</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>

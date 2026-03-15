@@ -21,7 +21,7 @@ export function DashboardHeader() {
         <SidebarTrigger className="-ml-2" />
         <div className="flex items-center gap-2 text-muted-foreground">
           <Icon className="size-4" />
-          <span className="text-sm font-medium">{page.title}</span>
+          <span className="text-xs font-medium">{page.title}</span>
         </div>
       </div>
     </header>
