@@ -1,6 +1,6 @@
 "use client";
 
-import { ExternalLink, Check, Loader2 } from "lucide-react";
+import { Check, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useWebflowAuth } from "@/hooks/use-webflow-auth";
 
@@ -12,8 +12,8 @@ export function ConnectWebflowButton() {
 
     if (loading) {
         return (
-            <Button variant="outline" size="sm" disabled className="gap-2">
-                <Loader2 className="size-4 animate-spin" />
+            <Button variant="outline" size="sm" disabled className="gap-1.5 text-muted-foreground">
+                <Loader2 className="size-3.5 animate-spin" />
                 Checking…
             </Button>
         );
@@ -24,23 +24,18 @@ export function ConnectWebflowButton() {
             <Button
                 variant="outline"
                 size="sm"
-                className="gap-2 border-emerald-500/30 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/10"
+                className="gap-1.5 text-[var(--wf-green-border)] border-[var(--wf-green-border)]/30 hover:bg-[var(--wf-green-bg)]"
                 disabled
             >
-                <Check className="size-4" />
+                <Check className="size-3.5" />
                 Connected to Webflow
             </Button>
         );
     }
 
     return (
-        <Button
-            asChild
-            size="sm"
-            className="gap-2 bg-[#4353FF] hover:bg-[#3644DD] text-white"
-        >
-            <a href={connectUrl}>
-                <ExternalLink className="size-4" />
+        <Button asChild size="sm" className="gap-1.5">
+            <a href={connectUrl} target="_blank" rel="noreferrer">
                 Connect with Webflow
             </a>
         </Button>
