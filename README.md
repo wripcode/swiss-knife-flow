@@ -50,10 +50,10 @@ The extension reads `VITE_DATA_CLIENT_URL` from `extension/.env.development` (de
 
 This is a **pnpm monorepo** with two packages:
 
-| Package | Description |
-|---|---|
-| **Root** | Next.js 16 web app — dashboard, API backend, OAuth flow |
-| **`extension/`** | Vite + React — runs as a [Webflow Designer Extension](https://developers.webflow.com) |
+| Package          | Description                                             |
+| ---------------- | ------------------------------------------------------- |
+| **Root**         | Next.js 16 web app — dashboard, API backend, OAuth flow |
+| **`extension/`** | Vite + React — runs as a Webflow Designer Extension     |
 
 ### Data Storage
 
@@ -118,8 +118,8 @@ components/
 
 ### Tools
 
-| Tool | Route | Description |
-|---|---|---|
+| Tool              | Route                | Description                                       |
+| ----------------- | -------------------- | ------------------------------------------------- |
 | Custom Attributes | `/custom-attributes` | Manage custom HTML attributes on Webflow elements |
 
 More tools coming soon.

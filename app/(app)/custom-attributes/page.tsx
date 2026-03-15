@@ -1,16 +1,25 @@
 "use client";
 
+import { useEffect } from "react";
 import { Tags } from "lucide-react";
+import { useFooterStore } from "@/store/footer-store";
 
 export default function CustomAttributesPage() {
+  const { setFooterGuide, clearFooterGuide } = useFooterStore();
+
+  useEffect(() => {
+    setFooterGuide("Select an element to view or add custom attributes");
+    return () => clearFooterGuide();
+  }, [setFooterGuide, clearFooterGuide]);
+
   return (
     <div className="w-full overflow-y-auto overflow-x-hidden p-4 h-full">
       <div className="mx-auto w-full space-y-6">
         <div className="flex flex-col gap-1">
-          <h1 className="text-xl sm:text-2xl font-semibold tracking-tight">
+          <h1 className="text-base font-semibold tracking-tight">
             Custom Attributes
           </h1>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-xs text-muted-foreground">
             Manage custom attributes for your Webflow elements.
           </p>
         </div>
@@ -20,7 +29,7 @@ export default function CustomAttributesPage() {
             <Tags className="size-6 text-muted-foreground" />
           </div>
           <div className="text-center space-y-1">
-            <p className="text-sm font-medium">No attributes configured yet</p>
+            <p className="text-xs font-medium">No attributes configured yet</p>
             <p className="text-xs text-muted-foreground">
               Connect a Webflow site to start managing custom attributes.
             </p>

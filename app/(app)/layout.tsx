@@ -1,5 +1,6 @@
 import { DashboardSidebar } from "@/components/dashboard/sidebar";
 import { DashboardHeader } from "@/components/dashboard/header";
+import { AppFooter } from "@/components/dashboard/footer";
 import { SidebarProvider } from "@/components/ui/sidebar";
 
 export default function AppShellLayout({
@@ -16,6 +17,7 @@ export default function AppShellLayout({
           <main className="w-full flex-1 overflow-auto">
             {children}
           </main>
+          <AppFooter />
         </div>
       </div>
     </SidebarProvider>

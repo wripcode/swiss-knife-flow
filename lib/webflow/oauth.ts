@@ -1,11 +1,12 @@
 import { WebflowClient } from "webflow-api";
+import { WEBFLOW_SCOPES } from "./scopes";
 
 const WEBFLOW_CLIENT_ID = process.env.WEBFLOW_CLIENT_ID!;
 const WEBFLOW_CLIENT_SECRET = process.env.WEBFLOW_CLIENT_SECRET!;
 
 // Define the permissions your app needs
 // See https://developers.webflow.com/v2.0.0/data/reference/scopes
-const DEFAULT_SCOPES = ["sites:read"];
+const DEFAULT_SCOPES = [...WEBFLOW_SCOPES];
 
 /**
  * Build the Webflow OAuth authorization URL
