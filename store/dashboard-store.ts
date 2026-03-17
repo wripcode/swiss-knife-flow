@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { ProjectStatus } from "@/mock-data/dashboard";
+export type ProjectStatus = "active" | "completed" | "on-hold" | "archived";
 
 interface DashboardStore {
   tasksSearchQuery: string;

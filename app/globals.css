@@ -115,7 +115,7 @@
   /* --- Typography (Webflow spec) --- */
   --font-stack: 'Inter', sans-serif;
   --font-stack-code: var(--font-roboto-mono), 'Roboto Mono', monospace;
-  --font-size-small: 11px;   /* 11/16 — primary UI text */
+  --font-size-small: 11.5px;   /* 11/16 — primary UI text */
   --font-size-large: 12px;   /* 12/16 — slightly larger UI text */
   --font-size-code: 11px;    /* 11/16 — Roboto Mono code */
   --line-height-ui: 16px;    /* Webflow standard 16px line-height */
@@ -168,6 +168,7 @@ select {
   background: var(--background-input);
   font-size: var(--font-size-small);
   box-shadow: none;
+  height: 24px;
 }
 
 input:focus,
@@ -182,13 +183,14 @@ select:focus {
    ============================================================ */
 
 [data-slot="button"] {
-  filter: drop-shadow(0px 0.5px 1px rgba(0, 0, 0, 1));
+  filter: drop-shadow(0px 0.5px 1px rgba(0, 0, 0, 0.3));
   border-radius: 4px;
   padding: 4px 8px;
   gap: 2px;
   font-size: var(--font-size-small);
   font-weight: var(--font-weight-medium);
   line-height: 1;
+  height: 24px;
 }
 
 /* -- Solid / Default (dark surface) -- */

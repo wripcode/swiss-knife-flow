@@ -13,7 +13,7 @@ export function AppFooter() {
   if (!message) return null;
 
   return (
-    <footer className="flex items-center justify-between gap-2 px-3 py-2 border-t bg-card shrink-0">
+    <footer className="flex items-center justify-between gap-2 px-3 py-1.5 border-t bg-card shrink-0">
       <div className="flex items-center min-w-0">
         <p className="text-[10px] leading-none truncate text-muted-foreground">
           {message}

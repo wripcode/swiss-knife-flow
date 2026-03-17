@@ -1,39 +1,63 @@
 "use client";
 
 import { useEffect } from "react";
-import { Tags } from "lucide-react";
+import { onExtensionMessage } from "@/lib/message-bus";
 import { useFooterStore } from "@/store/footer-store";
+import { useAttributesStore } from "@/store/attributes-store";
+import { AttributesManagePanel } from "@/components/attributes/attributes-manage-panel";
+import { AttributesListPanel } from "@/components/attributes/attributes-list-panel";
 
 export default function CustomAttributesPage() {
   const { setFooterGuide, clearFooterGuide } = useFooterStore();
+  const { setElementGroups, setSelectedElementId, fetchAttributes } = useAttributesStore();
 
   useEffect(() => {
     setFooterGuide("Select an element to view or add custom attributes");
-    return () => clearFooterGuide();
-  }, [setFooterGuide, clearFooterGuide]);
+    fetchAttributes();
+
+    const unsubAttributes = onExtensionMessage<{
+      elementId: string | null;
+      elementGroups: any[];
+    }>("ATTRIBUTES_UPDATED", (payload) => {
+      setSelectedElementId(payload.elementId);
+      setElementGroups(payload.elementGroups || []);
+      setFooterGuide(
+        payload.elementId
+          ? "Manage element custom attributes"
+          : "Select an element to view or add custom attributes"
+      );
+    });
+
+    const unsubDeselected = onExtensionMessage("ELEMENT_DESELECTED", () => {
+      setSelectedElementId(null);
+      setFooterGuide("Select an element to view or add custom attributes");
+    });
+
+    return () => {
+      unsubAttributes();
+      unsubDeselected();
+      clearFooterGuide();
+    };
+  }, [setFooterGuide, clearFooterGuide, setElementGroups, setSelectedElementId, fetchAttributes]);
 
   return (
-    <div className="w-full overflow-y-auto overflow-x-hidden p-4 h-full">
-      <div className="mx-auto w-full space-y-6">
-        <div className="flex flex-col gap-1">
-          <h1 className="text-base font-semibold tracking-tight">
-            Custom Attributes
-          </h1>
-          <p className="text-xs text-muted-foreground">
-            Manage custom attributes for your Webflow elements.
-          </p>
+    <div className="w-full overflow-hidden p-4 h-full flex flex-col">
+      <div className="flex flex-col gap-1 mb-4">
+        <h1 className="text-base font-semibold tracking-tight">
+          Custom Attributes
+        </h1>
+        <p className="text-xs text-muted-foreground">
+          Manage custom attributes for your Webflow elements.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-[300px_1fr] gap-8 h-full min-h-0">
+        <div className="h-full">
+          <AttributesManagePanel />
         </div>
 
-        <div className="flex flex-col items-center justify-center rounded-lg border border-dashed py-16 gap-4">
-          <div className="size-12 rounded-lg bg-muted flex items-center justify-center">
-            <Tags className="size-6 text-muted-foreground" />
-          </div>
-          <div className="text-center space-y-1">
-            <p className="text-xs font-medium">No attributes configured yet</p>
-            <p className="text-xs text-muted-foreground">
-              Connect a Webflow site to start managing custom attributes.
-            </p>
-          </div>
+        <div className="min-h-0 overflow-hidden relative border rounded-lg p-4 bg-background/50">
+          <AttributesListPanel />
         </div>
       </div>
     </div>
