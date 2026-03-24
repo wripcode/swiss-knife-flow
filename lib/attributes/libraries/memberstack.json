@@ -1,0 +1,11 @@
+{
+  "id": "memberstack",
+  "provider": "Memberstack",
+  "docsUrl": "https://docs.memberstack.com/",
+  "script": {
+    "hostedLocation": "https://api.memberstack.io/memberstack.js",
+    "version": "1.0.0",
+    "displayName": "Memberstack"
+  },
+  "categories": []
+}

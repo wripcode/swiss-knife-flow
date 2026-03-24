@@ -1,0 +1,12 @@
+{
+  "id": "finsweet-v2",
+  "provider": "Finsweet Attributes v2",
+  "docsUrl": "https://finsweet.com/attributes",
+  "script": {
+    "hostedLocation": "https://cdn.jsdelivr.net/npm/@finsweet/attributes@2/attributes.js",
+    "integrityHash": "sha384-ih/wk9fvApwKT57/bbNvqqD5QO8hthZSzrpE/UBusaGXYJILVu13dAb3F1RSF62P",
+    "version": "2.0.0",
+    "displayName": "Finsweet Attributes v2"
+  },
+  "categories": []
+}

@@ -2,11 +2,20 @@
 
 import { usePathname } from "next/navigation";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { LayoutDashboard, Tags, Settings, type LucideIcon } from "lucide-react";
+import { 
+  LayoutDashboard, 
+  Package, 
+  Variable, 
+  Layers, 
+  Settings, 
+  type LucideIcon 
+} from "lucide-react";
 
 const pageMap: Record<string, { title: string; icon: LucideIcon }> = {
   "/": { title: "Dashboard", icon: LayoutDashboard },
-  "/custom-attributes": { title: "Custom Attributes", icon: Tags },
+  "/attributes": { title: "Attributes", icon: Package },
+  "/variables": { title: "Variables", icon: Variable },
+  "/components": { title: "Components", icon: Layers },
   "/settings": { title: "Settings", icon: Settings },
 };
 

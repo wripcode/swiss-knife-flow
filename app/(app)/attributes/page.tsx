@@ -6,6 +6,8 @@ import { useFooterStore } from "@/store/footer-store";
 import { useAttributesStore } from "@/store/attributes-store";
 import { AttributesManagePanel } from "@/components/attributes/attributes-manage-panel";
 import { AttributesListPanel } from "@/components/attributes/attributes-list-panel";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TemplatesPanel } from "@/components/attributes/templates/templates-panel";
 
 export default function CustomAttributesPage() {
   const { setFooterGuide, clearFooterGuide } = useFooterStore();
@@ -42,24 +44,37 @@ export default function CustomAttributesPage() {
 
   return (
     <div className="w-full overflow-hidden p-4 h-full flex flex-col">
-      <div className="flex flex-col gap-1 mb-4">
+      <div className="flex items-center justify-between mb-4 shrink-0">
         <h1 className="text-base font-semibold tracking-tight">
           Custom Attributes
         </h1>
-        <p className="text-xs text-muted-foreground">
-          Manage custom attributes for your Webflow elements.
+        <p className="text-xs text-muted-foreground truncate">
+          Manage custom attributes for your Webflow elements
         </p>
       </div>
 
-      <div className="grid grid-cols-[300px_1fr] gap-8 h-full min-h-0">
-        <div className="h-full">
-          <AttributesManagePanel />
-        </div>
+      <Tabs defaultValue="manage" className="h-full flex flex-col min-h-0 relative z-10">
+        <TabsList className="w-full flex justify-start rounded-none h-auto p-0 gap-6 border-b border-white/10 mb-3">
+          <TabsTrigger value="manage" className="rounded-none px-0 py-2 data-[state=active]:bg-transparent -mb-px">Manage</TabsTrigger>
+          <TabsTrigger value="templates" className="rounded-none px-0 py-2 data-[state=active]:bg-transparent -mb-px">Templates</TabsTrigger>
+        </TabsList>
 
-        <div className="min-h-0 overflow-hidden relative border rounded-lg p-4 bg-background/50">
-          <AttributesListPanel />
-        </div>
-      </div>
+        <TabsContent value="manage" className="mt-0 h-full flex-1 min-h-0 flex flex-col outline-none data-[state=inactive]:hidden border-none p-0">
+          <div className="grid grid-cols-[250px_1fr] gap-8 h-full min-h-0 flex-1">
+            <div className="h-full min-h-0 overflow-y-auto">
+              <AttributesManagePanel />
+            </div>
+
+            <div className="min-h-0 h-full overflow-hidden relative border rounded-lg px-4 pt-4 pb-1 bg-background/50 flex flex-col">
+              <AttributesListPanel />
+            </div>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="templates" className="mt-0 h-full flex-1 min-h-0 flex flex-col outline-none data-[state=inactive]:hidden border-none p-0">
+          <TemplatesPanel />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

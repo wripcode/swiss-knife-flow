@@ -6,6 +6,7 @@ import { useAttributesStore } from "@/store/attributes-store";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { RefreshCcw, LocateFixed, Pencil, Trash2, Box } from "lucide-react";
+import { useNotify } from "@/hooks/use-notify";
 
 export function AttributesListPanel() {
   const {
@@ -18,6 +19,13 @@ export function AttributesListPanel() {
     removeAttribute,
     fetchAttributes,
   } = useAttributesStore();
+
+  const notify = useNotify();
+
+  const handleRemove = (name: string, elementId: string) => {
+    removeAttribute(name, elementId);
+    notify({ type: "Success", message: `Attribute '${name}' removed` });
+  };
 
   const filteredGroups = useMemo(() => {
     if (!searchQuery) return elementGroups;
@@ -78,7 +86,7 @@ export function AttributesListPanel() {
                   </div>
                 </div>
 
-                <div className="space-y-1.5 pl-4 border-l border-border/50">
+                <div className="space-y-1.5 ml-1 pl-4 border-l border-border/50">
                   {group.attributes.map((attr) => {
                     const isEditing =
                       editingAttribute?.name === attr.name &&
@@ -102,16 +110,16 @@ export function AttributesListPanel() {
                             <Button
                               variant="ghost"
                               size="icon"
-                              className="size-5 h-5 w-5"
+                              className="size-5 h-5 w-5 text-muted-foreground hover:text-foreground"
                               title="Navigate to element"
                               onClick={() => selectElement(group.elementId)}
                             >
-                              <LocateFixed className="size-3 text-muted-foreground" />
+                              <LocateFixed className="size-3" />
                             </Button>
                             <Button
                               variant="ghost"
                               size="icon"
-                              className="size-5 h-5 w-5"
+                              className="size-5 h-5 w-5 text-muted-foreground hover:text-primary hover:bg-primary/10"
                               onClick={() =>
                                 setEditingAttribute({
                                   name: attr.name,
@@ -120,13 +128,13 @@ export function AttributesListPanel() {
                                 })
                               }
                             >
-                              <Pencil className="size-3 text-muted-foreground" />
+                              <Pencil className="size-3" />
                             </Button>
                             <Button
                               variant="ghost"
                               size="icon"
-                              className="size-5 h-5 w-5 hover:text-destructive hover:bg-destructive/10"
-                              onClick={() => removeAttribute(attr.name, group.elementId)}
+                              className="size-5 h-5 w-5 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                              onClick={() => handleRemove(attr.name, group.elementId)}
                             >
                               <Trash2 className="size-3" />
                             </Button>
@@ -148,12 +156,12 @@ export function AttributesListPanel() {
                               <span className="text-[10px] text-muted-foreground">No classes</span>
                             )}
                           </div>
-                          <Badge
+                          {/* <Badge
                             variant="outline"
                             className="px-1.5 py-0 rounded-sm font-normal text-[10px] h-4 shrink-0 border-border/50"
                           >
                             {group.elementType}
-                          </Badge>
+                          </Badge> */}
                         </div>
                       </div>
                     );

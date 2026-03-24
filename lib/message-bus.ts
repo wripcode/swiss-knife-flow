@@ -4,7 +4,8 @@ export type MessageType =
   | "REMOVE_ATTRIBUTE"
   | "SELECT_ELEMENT"
   | "ATTRIBUTES_UPDATED"
-  | "ELEMENT_DESELECTED";
+  | "ELEMENT_DESELECTED"
+  | "NOTIFY";
 
 const VALID_TYPES = new Set<string>([
   "GET_ATTRIBUTES",
@@ -13,6 +14,7 @@ const VALID_TYPES = new Set<string>([
   "SELECT_ELEMENT",
   "ATTRIBUTES_UPDATED",
   "ELEMENT_DESELECTED",
+  "NOTIFY",
 ]);
 
 export interface BusMessage<T = unknown> {

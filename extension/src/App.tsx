@@ -72,6 +72,12 @@ function App() {
       if (el) await w.setSelectedElement(el)
     })
 
+    registerHandler('NOTIFY', async (payload, { wf: w }) => {
+      if (w && typeof w.notify === "function" && payload) {
+        w.notify({ type: payload.type, message: payload.message })
+      }
+    })
+
     let selectionTimer: ReturnType<typeof setTimeout> | null = null
 
     const handleSelectionChange = (element: any) => {

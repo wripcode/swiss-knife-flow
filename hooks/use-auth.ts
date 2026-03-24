@@ -2,17 +2,19 @@
 
 import { useState, useEffect, useCallback } from "react";
 
-interface WebflowAuthState {
+interface AuthState {
     authenticated: boolean;
     loading: boolean;
     error: string | null;
 }
 
 /**
- * Hook to check Webflow authentication status
+ * Hook to check authentication status.
+ * Listens for the `auth_complete` localStorage signal set by /auth/done
+ * (the OAuth self-closing page) to reload auth state without a page refresh.
  */
-export function useWebflowAuth() {
-    const [state, setState] = useState<WebflowAuthState>({
+export function useAuth() {
+    const [state, setState] = useState<AuthState>({
         authenticated: false,
         loading: true,
         error: null,
@@ -41,7 +43,15 @@ export function useWebflowAuth() {
         checkAuth();
     }, [checkAuth]);
 
-    const connectUrl = "/api/auth/webflow";
+    useEffect(() => {
+        const handleStorage = (e: StorageEvent) => {
+            if (e.key === "auth_complete") checkAuth();
+        };
+        window.addEventListener("storage", handleStorage);
+        return () => window.removeEventListener("storage", handleStorage);
+    }, [checkAuth]);
+
+    const connectUrl = "/api/auth/connect";
 
     return {
         ...state,
@@ -49,3 +59,4 @@ export function useWebflowAuth() {
         refresh: checkAuth,
     };
 }
+

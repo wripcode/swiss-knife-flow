@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useNotify } from "@/hooks/use-notify";
 
 export function AttributesManagePanel() {
   const {
@@ -20,6 +21,8 @@ export function AttributesManagePanel() {
     saveAttribute,
     selectedElementId,
   } = useAttributesStore();
+
+  const notify = useNotify();
 
   const [attrName, setAttrName] = useState("");
   const [attrValue, setAttrValue] = useState("");
@@ -39,8 +42,10 @@ export function AttributesManagePanel() {
 
     if (editingAttribute) {
       saveAttribute(editingAttribute.name, attrName, attrValue, editingAttribute.elementId);
+      notify({ type: "Success", message: `Attribute '${attrName}' updated` });
     } else {
       saveAttribute(null, attrName, attrValue, selectedElementId || undefined);
+      notify({ type: "Success", message: `Attribute '${attrName}' added` });
     }
 
     setEditingAttribute(null);

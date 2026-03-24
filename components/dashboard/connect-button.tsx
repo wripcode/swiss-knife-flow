@@ -2,13 +2,13 @@
 
 import { Check, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useWebflowAuth } from "@/hooks/use-webflow-auth";
+import { useAuth } from "@/hooks/use-auth";
 
 /**
- * Button that initiates the Webflow OAuth flow or shows connection status
+ * Button that initiates the OAuth flow or shows connection status
  */
-export function ConnectWebflowButton() {
-    const { authenticated, loading, connectUrl } = useWebflowAuth();
+export function ConnectButton() {
+    const { authenticated, loading, connectUrl } = useAuth();
 
     if (loading) {
         return (
@@ -24,7 +24,7 @@ export function ConnectWebflowButton() {
             <Button
                 variant="default"
                 size="sm"
-                className="gap-1.5 bg-primary"
+                className="gap-1.5"
                 disabled
             >
                 <Check className="size-3.5" />

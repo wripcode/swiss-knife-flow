@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getAuthorizeURL } from "@/lib/webflow/oauth";
+import { getAuthorizeURL } from "@/lib/auth-client/oauth";
 
 /**
  * GET /api/auth/webflow

@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
-import { SitesList } from "@/components/webflow/sites-list";
+import { SitesList } from "@/components/dashboard/sites-list";
 import { Loader2 } from "lucide-react";
 
 function WelcomeSection() {
-  const [userName, setUserName] = useState("there");
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     async function fetchUser() {
@@ -27,8 +27,8 @@ function WelcomeSection() {
   return (
     <div className="flex flex-col gap-1">
       <h1 className="text-base font-semibold tracking-tight">
-        Welcome Back, {userName}! 👋
-      </h1>
+        {userName ? `Welcome back, ${userName}! 👋` : "Welcome"}
+    </h1>
     </div>
   );
 }

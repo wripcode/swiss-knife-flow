@@ -1,11 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import {
   LayoutDashboard,
   Settings,
-  Tags,
+  Package,
+  Variable,
+  Layers,
 } from "lucide-react";
 import {
   Sidebar,
@@ -17,7 +19,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarSeparator,
 } from "@/components/ui/sidebar";
 
 const topNavItems = [
@@ -25,16 +26,27 @@ const topNavItems = [
 ];
 
 const toolItems = [
-  { title: "Custom Attributes", href: "/custom-attributes", icon: Tags },
+  { title: "Attributes", href: "/attributes", icon: Package },
+  { title: "Variables", href: "/variables", icon: Variable },
+  { title: "Components", href: "/components", icon: Layers },
 ];
 
-export function DashboardSidebar(
-  props: React.ComponentProps<typeof Sidebar>
-) {
+export function DashboardSidebar({
+  ...props
+}: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const siteId = searchParams.get("siteId");
+
+  const getHrefWithSiteId = (href: string) => {
+    if (!siteId) return href;
+    const url = new URL(href, "http://localhost");
+    url.searchParams.set("siteId", siteId);
+    return `${url.pathname}${url.search}`;
+  };
 
   return (
-    <Sidebar collapsible="offcanvas" className="!border-r-0" {...props}>
+    <Sidebar collapsible="offcanvas" className="border-r-0!" {...props}>
       <SidebarHeader className="px-3 py-4">
         <div className="flex items-center w-full">
           <span className="font-semibold text-sidebar-foreground truncate text-base">
@@ -54,7 +66,7 @@ export function DashboardSidebar(
                     isActive={pathname === item.href}
                     className="h-9"
                   >
-                    <Link href={item.href}>
+                    <Link href={getHrefWithSiteId(item.href)}>
                       <item.icon
                         className={`size-4 shrink-0 ${
                           pathname === item.href
@@ -71,8 +83,6 @@ export function DashboardSidebar(
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {/* <SidebarSeparator className="my-2 mx-1 bg-sidebar-border" /> */}
-
         <SidebarGroup className="p-0">
           <SidebarGroupContent>
             <SidebarMenu>
@@ -86,7 +96,7 @@ export function DashboardSidebar(
                     isActive={pathname === item.href}
                     className="h-9"
                   >
-                    <Link href={item.href}>
+                    <Link href={getHrefWithSiteId(item.href)}>
                       <item.icon
                         className={`size-4 shrink-0 ${
                           pathname === item.href
@@ -112,7 +122,7 @@ export function DashboardSidebar(
               isActive={pathname === "/settings"}
               className="h-9"
             >
-              <Link href="/settings">
+              <Link href={getHrefWithSiteId("/settings")}>
                 <Settings className={`size-4 shrink-0 ${pathname === "/settings" ? "text-primary" : "text-muted-foreground"}`} />
                 <span className="text-xs">Settings</span>
               </Link>
@@ -123,4 +133,3 @@ export function DashboardSidebar(
     </Sidebar>
   );
 }
-

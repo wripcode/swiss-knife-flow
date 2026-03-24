@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { exchangeCodeForToken } from "@/lib/webflow/oauth";
+import { exchangeCodeForToken } from "@/lib/auth-client/oauth";
 import { storeToken } from "@/lib/db/token-store";
 
 /**
@@ -29,18 +29,15 @@ export async function GET(request: NextRequest) {
     }
 
     try {
-        // Exchange the authorization code for an access token
         const token = await exchangeCodeForToken(code);
 
-        // Store the token
         await storeToken(token);
 
         if (process.env.NODE_ENV === "development") {
             console.log("\n✅ Webflow Access Token Received\n");
         }
 
-        // Redirect to dashboard with success indicator
-        return NextResponse.redirect(new URL("/?authorized=true", request.url));
+        return NextResponse.redirect(new URL("/auth/done", request.url));
     } catch (err) {
         console.error("Auth callback error:", err);
         return NextResponse.redirect(

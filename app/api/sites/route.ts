@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getWebflowClient } from "@/lib/webflow/client";
+import { getWebflowClient } from "@/lib/auth-client/client";
 
 /**
  * GET /api/sites
@@ -14,11 +14,15 @@ export async function GET() {
     } catch (error: unknown) {
         console.error("Sites API Error:", error);
 
+        const statusCode =
+            error && typeof error === "object" && "statusCode" in error
+                ? (error as { statusCode: number }).statusCode
+                : null;
+
         const message =
             error instanceof Error ? error.message : "Failed to fetch sites";
 
-        // Handle authentication errors
-        if (message.includes("Not authenticated")) {
+        if (statusCode === 401 || message.includes("Not authenticated")) {
             return NextResponse.json(
                 { error: "Not authenticated", message: "Please connect with Webflow first" },
                 { status: 401 }

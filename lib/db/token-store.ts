@@ -38,7 +38,7 @@ function getDb(): Promise<Level<string, string>> {
     return dbPromise;
 }
 
-const TOKEN_KEY = "webflow_token";
+const TOKEN_KEY = "access_token";
 
 /**
  * Store the Webflow access token

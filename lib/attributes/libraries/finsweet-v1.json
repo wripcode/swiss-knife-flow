@@ -1,0 +1,181 @@
+{
+  "id": "finsweet-v1",
+  "provider": "Finsweet Attributes v1",
+  "docsUrl": "https://finsweet.com/attributes",
+  "script": {
+    "hostedLocation": "https://cdn.jsdelivr.net/npm/@finsweet/attributes@1/attributes.js",
+    "integrityHash": "sha384-tvSVVQdaccougTBOynYRqeB9OTM0Djw7JNahb9BfnePq6j/LFclAb/eSowXy44Mo",
+    "version": "1.0.0",
+    "displayName": "FinsweetAttributes"
+  },
+  "categories": [
+    {
+      "id": "cms-filter",
+      "label": "CMS Filter",
+      "attributes": [
+        {
+          "key": "fs-cmsfilter-element",
+          "valueOptions": ["list", "filters", "reset", "empty", "results-count"],
+          "requirement": "must-have",
+          "description": "Defines the role of the element in the CMS filter setup"
+        },
+        {
+          "key": "fs-cmsfilter-field",
+          "valueOptions": [],
+          "requirement": "must-have",
+          "description": "CMS field slug used for filtering the collection list"
+        },
+        {
+          "key": "fs-cmsfilter-type",
+          "valueOptions": ["checkbox", "radio", "range", "select"],
+          "requirement": "optional",
+          "description": "Specifies the type of filter interaction"
+        },
+        {
+          "key": "fs-cmsfilter-active",
+          "valueOptions": ["true", "false"],
+          "requirement": "optional",
+          "description": "Sets the default active state of a filter"
+        },
+        {
+          "key": "fs-cmsfilter-animationin",
+          "valueOptions": [],
+          "requirement": "optional",
+          "description": "CSS class to apply when filter items appear"
+        },
+        {
+          "key": "fs-cmsfilter-animationout",
+          "valueOptions": [],
+          "requirement": "optional",
+          "description": "CSS class to apply when filter items disappear"
+        },
+        {
+          "key": "fs-cmsfilter-resetix",
+          "valueOptions": [],
+          "requirement": "logic",
+          "description": "Webflow IX2 interaction to play when filters are reset"
+        },
+        {
+          "key": "fs-cmsfilter-debounce",
+          "valueOptions": ["200", "500", "1000"],
+          "requirement": "optional",
+          "description": "Debounce delay in milliseconds for filter updates"
+        }
+      ]
+    },
+    {
+      "id": "cms-load",
+      "label": "CMS Load",
+      "attributes": [
+        {
+          "key": "fs-cmsload-element",
+          "valueOptions": ["list", "pagination", "loader", "empty"],
+          "requirement": "must-have",
+          "description": "Defines the role of the element in the CMS load setup"
+        },
+        {
+          "key": "fs-cmsload-mode",
+          "valueOptions": ["load-under", "render-all", "pagination"],
+          "requirement": "must-have",
+          "description": "The load mode for additional CMS items"
+        },
+        {
+          "key": "fs-cmsload-resetix",
+          "valueOptions": [],
+          "requirement": "optional",
+          "description": "Webflow IX2 interaction to play after loading new items"
+        },
+        {
+          "key": "fs-cmsload-animation",
+          "valueOptions": ["fade", "slide"],
+          "requirement": "optional",
+          "description": "Animation style for newly loaded items"
+        }
+      ]
+    },
+    {
+      "id": "cms-sort",
+      "label": "CMS Sort",
+      "attributes": [
+        {
+          "key": "fs-cmssort-element",
+          "valueOptions": ["trigger", "list"],
+          "requirement": "must-have",
+          "description": "Defines the role of the element in the CMS sort setup"
+        },
+        {
+          "key": "fs-cmssort-field",
+          "valueOptions": [],
+          "requirement": "must-have",
+          "description": "CMS field slug used for sorting the collection list"
+        },
+        {
+          "key": "fs-cmssort-order",
+          "valueOptions": ["asc", "desc"],
+          "requirement": "optional",
+          "description": "Default sort order direction"
+        },
+        {
+          "key": "fs-cmssort-type",
+          "valueOptions": ["string", "number", "date"],
+          "requirement": "optional",
+          "description": "Data type for correct sort comparison"
+        }
+      ]
+    },
+    {
+      "id": "cms-nest",
+      "label": "CMS Nest",
+      "attributes": [
+        {
+          "key": "fs-cmsnest-element",
+          "valueOptions": ["list"],
+          "requirement": "must-have",
+          "description": "Identifies the collection list to nest into"
+        },
+        {
+          "key": "fs-cmsnest-collection",
+          "valueOptions": [],
+          "requirement": "must-have",
+          "description": "Collection slug of the nested collection"
+        },
+        {
+          "key": "fs-cmsnest-field",
+          "valueOptions": [],
+          "requirement": "must-have",
+          "description": "Reference or multi-reference field slug for nesting"
+        }
+      ]
+    },
+    {
+      "id": "cms-slider",
+      "label": "CMS Slider",
+      "attributes": [
+        {
+          "key": "fs-cmsslider-element",
+          "valueOptions": ["list", "slider"],
+          "requirement": "must-have",
+          "description": "Defines the CMS slider list or slider wrapper element"
+        },
+        {
+          "key": "fs-cmsslider-columns",
+          "valueOptions": ["1", "2", "3", "4"],
+          "requirement": "optional",
+          "description": "Number of visible slides per view"
+        },
+        {
+          "key": "fs-cmsslider-loop",
+          "valueOptions": ["true", "false"],
+          "requirement": "optional",
+          "description": "Whether the slider loops endlessly"
+        },
+        {
+          "key": "fs-cmsslider-navigation",
+          "valueOptions": ["arrows", "dots", "both"],
+          "requirement": "optional",
+          "description": "Navigation style for the slider"
+        }
+      ]
+    }
+  ]
+}

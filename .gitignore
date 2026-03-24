@@ -34,7 +34,7 @@ pnpm-debug.log*
 next-env.d.ts
 
 dev-data
-.agent
+.agents
 
 # LevelDB
 data/
