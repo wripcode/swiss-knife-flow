@@ -24,7 +24,7 @@ export async function POST(req: NextRequest, { params }: RouteParams) {
     const webflow = await getWebflowClient();
     const result = await webflow.scripts.registerHosted(siteId, {
       hostedLocation: body.hostedLocation,
-      integrityHash: body.integrityHash,
+      integrityHash: body.integrityHash || "",
       canCopy: body.canCopy ?? true,
       version: body.version,
       displayName: body.displayName,

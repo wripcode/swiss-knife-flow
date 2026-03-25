@@ -9,9 +9,17 @@ export const templatesAttributeSchema = z.object({
   description: z.string(),
 });
 
+export const categoryScriptSchema = z.object({
+  hostedLocation: z.string(),
+  integrityHash: z.string().optional(),
+  version: z.string(),
+  displayName: z.string(),
+});
+
 export const templatesCategorySchema = z.object({
   id: z.string(),
   label: z.string(),
+  cdn: categoryScriptSchema.optional(),
   attributes: z.array(templatesAttributeSchema),
 });
 
@@ -30,5 +38,6 @@ export const templatesLibrarySchema = z.object({
 
 export type Requirement = z.infer<typeof requirementEnum>;
 export type TemplatesAttribute = z.infer<typeof templatesAttributeSchema>;
+export type CategoryScript = z.infer<typeof categoryScriptSchema>;
 export type TemplatesCategory = z.infer<typeof templatesCategorySchema>;
 export type TemplatesLibrary = z.infer<typeof templatesLibrarySchema>;

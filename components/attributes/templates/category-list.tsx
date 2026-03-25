@@ -46,7 +46,7 @@ function CategoryRow({ category, siteId }: CategoryRowProps) {
   const isExpanded = expandedCategories.has(category.id);
   const grouped = useMemo(() => groupByRequirement(category.attributes), [category.attributes]);
 
-  const scriptStatus = library ? (scriptStatuses[library.id] ?? "idle") : "idle";
+  const scriptStatus = scriptStatuses[category.id] ?? "idle";
 
   const handleAddAll = () => {
     for (const attr of category.attributes) {
@@ -62,7 +62,7 @@ function CategoryRow({ category, siteId }: CategoryRowProps) {
       notify({ type: "Error", message: "Site ID not available. Make sure you're inside Webflow." });
       return;
     }
-    addScriptToSite(siteId);
+    addScriptToSite(siteId, category.id);
   };
 
   const scriptIcon = {
@@ -73,11 +73,13 @@ function CategoryRow({ category, siteId }: CategoryRowProps) {
     error: <AlertCircle className="size-3 text-red-400" />,
   }[scriptStatus];
 
+  const cdnLabel = category.cdn?.displayName ?? library?.script.displayName ?? "Script";
+
   const scriptLabel = {
-    idle: "Add Script to Site",
+    idle: `Add ${cdnLabel}`,
     checking: "Checking…",
     adding: "Adding…",
-    added: "Script Added",
+    added: `${cdnLabel} Added`,
     error: "Failed — Retry",
   }[scriptStatus];
 

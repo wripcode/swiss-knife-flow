@@ -12,10 +12,22 @@
     {
       "id": "cms-filter",
       "label": "CMS Filter",
+      "cdn": {
+        "hostedLocation": "https://cdn.jsdelivr.net/npm/@finsweet/attributes-cmsfilter@1/cmsfilter.js",
+        "integrityHash": "sha384-sQfetzL7VOILi93hF1n0h6ueteteQ35ZlafCfRfscYwT66/rU9+rWnwtH1NzKnbJ",
+        "version": "1.0.0",
+        "displayName": "FinsCMSFilter"
+      },
       "attributes": [
         {
           "key": "fs-cmsfilter-element",
-          "valueOptions": ["list", "filters", "reset", "empty", "results-count"],
+          "valueOptions": [
+            "list",
+            "filters",
+            "reset",
+            "empty",
+            "results-count"
+          ],
           "requirement": "must-have",
           "description": "Defines the role of the element in the CMS filter setup"
         },
@@ -27,13 +39,21 @@
         },
         {
           "key": "fs-cmsfilter-type",
-          "valueOptions": ["checkbox", "radio", "range", "select"],
+          "valueOptions": [
+            "checkbox",
+            "radio",
+            "range",
+            "select"
+          ],
           "requirement": "optional",
           "description": "Specifies the type of filter interaction"
         },
         {
           "key": "fs-cmsfilter-active",
-          "valueOptions": ["true", "false"],
+          "valueOptions": [
+            "true",
+            "false"
+          ],
           "requirement": "optional",
           "description": "Sets the default active state of a filter"
         },
@@ -57,7 +77,11 @@
         },
         {
           "key": "fs-cmsfilter-debounce",
-          "valueOptions": ["200", "500", "1000"],
+          "valueOptions": [
+            "200",
+            "500",
+            "1000"
+          ],
           "requirement": "optional",
           "description": "Debounce delay in milliseconds for filter updates"
         }
@@ -66,16 +90,31 @@
     {
       "id": "cms-load",
       "label": "CMS Load",
+      "cdn": {
+        "hostedLocation": "https://cdn.jsdelivr.net/npm/@finsweet/attributes-cmsload@1/cmsload.js",
+        "version": "1.0.0",
+        "displayName": "FinsCMSLoad",
+        "integrityHash": "sha384-wPzl05QjfAuLaCtUucmdOQRwBUflVpCHXSkZcyqSr7BxfwupK6n7nVbwbuo1eof2"
+      },
       "attributes": [
         {
           "key": "fs-cmsload-element",
-          "valueOptions": ["list", "pagination", "loader", "empty"],
+          "valueOptions": [
+            "list",
+            "pagination",
+            "loader",
+            "empty"
+          ],
           "requirement": "must-have",
           "description": "Defines the role of the element in the CMS load setup"
         },
         {
           "key": "fs-cmsload-mode",
-          "valueOptions": ["load-under", "render-all", "pagination"],
+          "valueOptions": [
+            "load-under",
+            "render-all",
+            "pagination"
+          ],
           "requirement": "must-have",
           "description": "The load mode for additional CMS items"
         },
@@ -87,7 +126,10 @@
         },
         {
           "key": "fs-cmsload-animation",
-          "valueOptions": ["fade", "slide"],
+          "valueOptions": [
+            "fade",
+            "slide"
+          ],
           "requirement": "optional",
           "description": "Animation style for newly loaded items"
         }
@@ -96,10 +138,19 @@
     {
       "id": "cms-sort",
       "label": "CMS Sort",
+      "cdn": {
+        "hostedLocation": "https://cdn.jsdelivr.net/npm/@finsweet/attributes-cmssort@1/cmssort.js",
+        "version": "1.0.0",
+        "displayName": "Finsweet CMS Sort",
+        "integrityHash": "sha384-4taTEfhGhXDURDdbvkGr/O6n4nSHyAMg5xkdCOm4YWG5LIKkOLRr4mJ2KMed0Trg"
+      },
       "attributes": [
         {
           "key": "fs-cmssort-element",
-          "valueOptions": ["trigger", "list"],
+          "valueOptions": [
+            "trigger",
+            "list"
+          ],
           "requirement": "must-have",
           "description": "Defines the role of the element in the CMS sort setup"
         },
@@ -111,13 +162,20 @@
         },
         {
           "key": "fs-cmssort-order",
-          "valueOptions": ["asc", "desc"],
+          "valueOptions": [
+            "asc",
+            "desc"
+          ],
           "requirement": "optional",
           "description": "Default sort order direction"
         },
         {
           "key": "fs-cmssort-type",
-          "valueOptions": ["string", "number", "date"],
+          "valueOptions": [
+            "string",
+            "number",
+            "date"
+          ],
           "requirement": "optional",
           "description": "Data type for correct sort comparison"
         }
@@ -126,10 +184,18 @@
     {
       "id": "cms-nest",
       "label": "CMS Nest",
+      "cdn": {
+        "hostedLocation": "https://cdn.jsdelivr.net/npm/@finsweet/attributes-cmsnest@1/cmsnest.js",
+        "version": "1.0.0",
+        "displayName": "Finsweet CMS Nest",
+        "integrityHash": "sha384-e8g0NZ5eWzEDvW8Ljh39KveBwdWwOOgwf7mromrQcgYPDg1IqU8fdetQVtRMuEEH"
+      },
       "attributes": [
         {
           "key": "fs-cmsnest-element",
-          "valueOptions": ["list"],
+          "valueOptions": [
+            "list"
+          ],
           "requirement": "must-have",
           "description": "Identifies the collection list to nest into"
         },
@@ -153,25 +219,40 @@
       "attributes": [
         {
           "key": "fs-cmsslider-element",
-          "valueOptions": ["list", "slider"],
+          "valueOptions": [
+            "list",
+            "slider"
+          ],
           "requirement": "must-have",
           "description": "Defines the CMS slider list or slider wrapper element"
         },
         {
           "key": "fs-cmsslider-columns",
-          "valueOptions": ["1", "2", "3", "4"],
+          "valueOptions": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
           "requirement": "optional",
           "description": "Number of visible slides per view"
         },
         {
           "key": "fs-cmsslider-loop",
-          "valueOptions": ["true", "false"],
+          "valueOptions": [
+            "true",
+            "false"
+          ],
           "requirement": "optional",
           "description": "Whether the slider loops endlessly"
         },
         {
           "key": "fs-cmsslider-navigation",
-          "valueOptions": ["arrows", "dots", "both"],
+          "valueOptions": [
+            "arrows",
+            "dots",
+            "both"
+          ],
           "requirement": "optional",
           "description": "Navigation style for the slider"
         }

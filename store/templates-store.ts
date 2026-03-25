@@ -23,7 +23,7 @@ interface TemplatesStore {
   toggleCategory: (categoryId: string) => void;
   selectValue: (attributeKey: string, value: string) => void;
   applyAttribute: (key: string, value: string) => void;
-  addScriptToSite: (siteId: string) => Promise<void>;
+  addScriptToSite: (siteId: string, categoryId: string) => Promise<void>;
   removeScriptFromSite: (siteId: string, scriptId: string) => Promise<void>;
   fetchInstalledScripts: (siteId: string) => Promise<void>;
 }
@@ -114,17 +114,18 @@ export const useTemplatesStore = create<TemplatesStore>((set, get) => ({
     }
   },
 
-  addScriptToSite: async (siteId) => {
+  addScriptToSite: async (siteId, categoryId) => {
     const { library } = get();
     if (!library?.script || !siteId) return;
 
-    const { hostedLocation, integrityHash, version, displayName } = library.script;
-    const statusKey = library.id;
+    const category = library.categories.find((c) => c.id === categoryId);
+    const scriptSource = category?.cdn ?? library.script;
+    const { hostedLocation, integrityHash, version, displayName } = scriptSource;
+    const statusKey = categoryId;
 
     set({ scriptStatuses: { ...get().scriptStatuses, [statusKey]: "checking" } });
 
     try {
-      // Step 1: Check if already registered
       const listRes = await fetch(`/api/sites/${siteId}/scripts`);
       const listData = await listRes.json();
       const registered: Array<{ id: string; version: string }> =
@@ -135,7 +136,6 @@ export const useTemplatesStore = create<TemplatesStore>((set, get) => ({
 
       set({ scriptStatuses: { ...get().scriptStatuses, [statusKey]: "adding" } });
 
-      // Step 2: Register if needed
       if (!alreadyRegistered) {
         const regRes = await fetch(`/api/sites/${siteId}/scripts`, {
           method: "POST",
@@ -145,7 +145,6 @@ export const useTemplatesStore = create<TemplatesStore>((set, get) => ({
         if (!regRes.ok) throw new Error("Script registration failed");
       }
 
-      // Step 3: Get current applied scripts then upsert-merge
       const appliedRes = await fetch(`/api/sites/${siteId}/custom-code`);
       const appliedData = await appliedRes.json();
       const existingScripts: Array<{ id: string; location: string; version: string }> =

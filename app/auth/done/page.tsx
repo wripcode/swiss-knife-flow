@@ -11,6 +11,11 @@ import { Check } from "lucide-react";
 export default function AuthDonePage() {
     useEffect(() => {
         localStorage.setItem("auth_complete", Date.now().toString());
+        try {
+            const bc = new BroadcastChannel("auth_channel");
+            bc.postMessage("auth_complete");
+            bc.close();
+        } catch {}
         window.close();
     }, []);
 

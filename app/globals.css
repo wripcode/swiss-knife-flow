@@ -155,6 +155,11 @@
     font-size: var(--font-size-code);
     line-height: var(--line-height-ui);
   }
+  button, 
+  a, 
+  [role="button"] {
+    cursor: pointer;
+  }
 }
 
 /* ============================================================

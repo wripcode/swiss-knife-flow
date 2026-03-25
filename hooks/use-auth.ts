@@ -48,7 +48,25 @@ export function useAuth() {
             if (e.key === "auth_complete") checkAuth();
         };
         window.addEventListener("storage", handleStorage);
-        return () => window.removeEventListener("storage", handleStorage);
+
+        let bc: BroadcastChannel | null = null;
+        try {
+            bc = new BroadcastChannel("auth_channel");
+            bc.onmessage = (e) => {
+                if (e.data === "auth_complete") checkAuth();
+            };
+        } catch {}
+
+        const handleVisibility = () => {
+            if (document.visibilityState === "visible") checkAuth();
+        };
+        document.addEventListener("visibilitychange", handleVisibility);
+
+        return () => {
+            window.removeEventListener("storage", handleStorage);
+            document.removeEventListener("visibilitychange", handleVisibility);
+            bc?.close();
+        };
     }, [checkAuth]);
 
     const connectUrl = "/api/auth/connect";

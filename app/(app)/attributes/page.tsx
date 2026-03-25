@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { onExtensionMessage } from "@/lib/message-bus";
 import { useFooterStore } from "@/store/footer-store";
 import { useAttributesStore } from "@/store/attributes-store";
+import { ToolLayout } from "@/components/dashboard/tool-layout";
 import { AttributesManagePanel } from "@/components/attributes/attributes-manage-panel";
 import { AttributesListPanel } from "@/components/attributes/attributes-list-panel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -43,16 +44,10 @@ export default function CustomAttributesPage() {
   }, [setFooterGuide, clearFooterGuide, setElementGroups, setSelectedElementId, fetchAttributes]);
 
   return (
-    <div className="w-full overflow-hidden p-4 h-full flex flex-col">
-      <div className="flex items-center justify-between mb-4 shrink-0">
-        <h1 className="text-base font-semibold tracking-tight">
-          Custom Attributes
-        </h1>
-        <p className="text-xs text-muted-foreground truncate">
-          Manage custom attributes for your Webflow elements
-        </p>
-      </div>
-
+    <ToolLayout
+      title="Custom Attributes"
+      description="Manage custom attributes for your Webflow elements"
+    >
       <Tabs defaultValue="manage" className="h-full flex flex-col min-h-0 relative z-10">
         <TabsList className="w-full flex justify-start rounded-none h-auto p-0 gap-6 border-b border-white/10 mb-3">
           <TabsTrigger value="manage" className="rounded-none px-0 py-2 data-[state=active]:bg-transparent -mb-px">Manage</TabsTrigger>
@@ -75,6 +70,6 @@ export default function CustomAttributesPage() {
           <TemplatesPanel />
         </TabsContent>
       </Tabs>
-    </div>
+    </ToolLayout>
   );
 }
