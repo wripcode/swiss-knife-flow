@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { useAttributesStore } from "@/store/attributes-store";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { RefreshCcw, LocateFixed, Pencil, Trash2, Box } from "lucide-react";
+import { RefreshCcw, LocateFixed, Pencil, Trash2, Box, Plus } from "lucide-react";
 import { useNotify } from "@/hooks/use-notify";
 
 export function AttributesListPanel() {
@@ -63,6 +63,7 @@ export function AttributesListPanel() {
         >
           <RefreshCcw className="size-3 text-muted-foreground" />
         </Button>
+        
       </div>
 
       <div className="flex-1 overflow-y-auto pr-2 space-y-4 pb-6">
@@ -115,6 +116,7 @@ export function AttributesListPanel() {
                             >
                               <LocateFixed className="size-3" />
                             </Button>
+                            
                             <Button
                               variant="ghost"
                               size="icon-xs"

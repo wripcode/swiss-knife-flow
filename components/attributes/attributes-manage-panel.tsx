@@ -66,7 +66,8 @@ export function AttributesManagePanel() {
         <Search className="absolute left-2.5 top-1.5 size-3 text-muted-foreground" />
         <Input
           placeholder="Search attributes..."
-          className="pl-9 bg-background/50 h-9 text-sm"
+          className="pl-9 bg-background/50"
+          size="xl"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
@@ -89,14 +90,16 @@ export function AttributesManagePanel() {
             placeholder="Name (data-*)"
             value={attrName}
             onChange={(e) => setAttrName(e.target.value)}
-            className="flex-1 h-8 text-xs bg-background/50"
+            size="lg"
+            className="flex-1 bg-background/50"
           />
           <span className="text-muted-foreground text-sm">=</span>
           <Input
             placeholder="Value"
             value={attrValue}
             onChange={(e) => setAttrValue(e.target.value)}
-            className="flex-1 h-8 text-xs bg-background/50"
+            size="lg"
+            className="flex-1 bg-background/50"
           />
         </div>
 

@@ -166,8 +166,7 @@
    Webflow Component Overrides
    ============================================================ */
 
-/* -- Inputs & Text-areas -- */
-input,
+/* -- Text-areas & Select -- */
 textarea,
 select {
   background: var(--background-input);
@@ -176,7 +175,6 @@ select {
   height: 24px;
 }
 
-input:focus,
 textarea:focus,
 select:focus {
   outline: none; 

@@ -326,7 +326,8 @@ function SidebarInput({
     <Input
       data-slot="sidebar-input"
       data-sidebar="input"
-      className={cn("bg-background h-8 w-full shadow-none", className)}
+      size="lg"
+      className={cn("bg-background shadow-none", className)}
       {...props}
     />
   )

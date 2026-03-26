@@ -36,7 +36,7 @@ export function TemplatesPanel() {
         <AlertCircle className="w-12 h-12 text-destructive/50" />
         <div className="space-y-2">
           <h3 className="text-lg font-semibold">Missing Site ID</h3>
-          <p className="text-sm text-muted-foreground max-w-[200px]">
+          <p className="text-sm text-muted-foreground max-w-50">
             Please open this extension from within the Webflow Designer sidebar to manage templates.
           </p>
         </div>
@@ -109,7 +109,8 @@ export function TemplatesPanel() {
         <Search className="absolute left-2.5 top-1.5 size-3 text-muted-foreground" />
         <Input
           placeholder="Search categories or attributes..."
-          className="pl-9 bg-background/50 h-9 text-sm"
+          className="pl-9 bg-background/50"
+          size="xl"
           value={searchQuery}
           onChange={(e) => setSearch(e.target.value)}
         />
