@@ -12,7 +12,7 @@ export function ConnectButton() {
 
     if (loading) {
         return (
-            <Button variant="outline" size="sm" disabled className="gap-1.5 text-muted-foreground">
+            <Button variant="outline" size="sm" disabled className="text-muted-foreground">
                 <Loader2 className="size-3.5 animate-spin" />
                 Checking…
             </Button>
@@ -24,7 +24,6 @@ export function ConnectButton() {
             <Button
                 variant="default"
                 size="sm"
-                className="gap-1.5"
                 disabled
             >
                 <Check className="size-3.5" />
@@ -34,7 +33,7 @@ export function ConnectButton() {
     }
 
     return (
-        <Button asChild size="sm" className="gap-1.5">
+        <Button asChild size="sm">
             <a href={connectUrl} target="_blank" rel="noreferrer">
                 Connect with Webflow
             </a>

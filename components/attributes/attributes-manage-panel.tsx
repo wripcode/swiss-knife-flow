@@ -101,11 +101,11 @@ export function AttributesManagePanel() {
         </div>
 
         <div className="flex gap-2 mt-1">
-          <Button onClick={handleSave} className="flex-1 h-8" variant="default">
+          <Button onClick={handleSave} className="flex-1" variant="default">
             {isEditing ? "Save Changes" : "Create"}
           </Button>
           {isEditing && (
-            <Button variant="outline" className="h-8 px-3" onClick={handleCancel}>
+            <Button variant="outline" className="px-3" onClick={handleCancel}>
               Cancel
             </Button>
           )}

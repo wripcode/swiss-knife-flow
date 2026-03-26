@@ -243,8 +243,7 @@ export function SitesList() {
                 </div>
                 <Button
                     variant="ghost"
-                    size="icon"
-                    className="size-7"
+                    size="icon-lg"
                     onClick={refresh}
                     disabled={sitesLoading}
                 >

@@ -111,7 +111,8 @@ function CategoryRow({ category, siteId }: CategoryRowProps) {
           <div className="flex items-center gap-2">
             <Button
               variant={scriptStatus === "added" ? "default" : "outline"}
-              className={`gap-2 h-9 flex-1 transition-all duration-300 ${
+              size="lg"
+              className={`flex-1 transition-all duration-300 ${
                 scriptStatus === "added" 
                   ? "bg-green-500/20 text-green-400 hover:bg-green-500/30 border-green-500/30" 
                   : "bg-white/5 hover:bg-white/10 border-white/10"
@@ -124,7 +125,8 @@ function CategoryRow({ category, siteId }: CategoryRowProps) {
             </Button>
             <Button
               variant="outline"
-              className="gap-2 h-9 bg-white/5 hover:bg-white/10 border-white/10"
+              size="lg"
+              className="bg-white/5 hover:bg-white/10 border-white/10"
               onClick={handleAddAll}
             >
               <Plus className="size-3.5" />

@@ -103,7 +103,7 @@ export function SiteScriptsPanel({ siteId }: { siteId: string }) {
                   <Button
               variant="ghost"
               size="icon"
-              className="size-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10 opacity-0 group-hover:opacity-100 transition-all duration-300"
+              className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 opacity-0 group-hover:opacity-100 transition-all duration-300"
               onClick={() => removeScriptFromSite(siteId, script.id)}
             >
               <Trash2 className="size-3.5" />

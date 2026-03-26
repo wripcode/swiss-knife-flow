@@ -59,7 +59,6 @@ export function AttributesListPanel() {
         <Button
           variant="ghost"
           size="icon"
-          className="size-6 h-6 w-6 rounded-md"
           onClick={() => fetchAttributes()}
         >
           <RefreshCcw className="size-3 text-muted-foreground" />
@@ -109,8 +108,8 @@ export function AttributesListPanel() {
                           <div className="flex items-center gap-0.5 opacity-0 group-hover/attr:opacity-100 transition-opacity shrink-0">
                             <Button
                               variant="ghost"
-                              size="icon"
-                              className="size-5 h-5 w-5 text-muted-foreground hover:text-foreground"
+                              size="icon-xs"
+                              className="text-muted-foreground hover:text-foreground"
                               title="Navigate to element"
                               onClick={() => selectElement(group.elementId)}
                             >
@@ -118,8 +117,8 @@ export function AttributesListPanel() {
                             </Button>
                             <Button
                               variant="ghost"
-                              size="icon"
-                              className="size-5 h-5 w-5 text-muted-foreground hover:text-primary hover:bg-primary/10"
+                              size="icon-xs"
+                              className="text-muted-foreground hover:text-primary hover:bg-primary/10"
                               onClick={() =>
                                 setEditingAttribute({
                                   name: attr.name,
@@ -132,8 +131,8 @@ export function AttributesListPanel() {
                             </Button>
                             <Button
                               variant="ghost"
-                              size="icon"
-                              className="size-5 h-5 w-5 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                              size="icon-xs"
+                              className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
                               onClick={() => handleRemove(attr.name, group.elementId)}
                             >
                               <Trash2 className="size-3" />

@@ -72,7 +72,7 @@ export function AttributeRow({ attribute }: AttributeRowProps) {
             value={currentValue}
             onValueChange={(v) => selectValue(attribute.key, v)}
           >
-            <SelectTrigger className="h-6 w-[120px] text-md bg-background/50 border-border/50">
+            <SelectTrigger className="h-6 w-30 text-md bg-background/50 border-border/50">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -87,8 +87,8 @@ export function AttributeRow({ attribute }: AttributeRowProps) {
 
         <Button
           variant="ghost"
-          size="icon"
-          className="size-5 h-5 w-5 text-muted-foreground hover:text-primary opacity-0 group-hover/row:opacity-100 transition-opacity"
+          size="icon-xs"
+          className="text-muted-foreground hover:text-primary opacity-0 group-hover/row:opacity-100 transition-opacity"
           onClick={handleAdd}
           title={`Add ${attribute.key}`}
         >
@@ -122,7 +122,7 @@ export function CopyScriptButton({ script }: CopyScriptButtonProps) {
   return (
     <Button
       variant="default"
-      className="h-6 text-[10px] gap-1 px-2"
+      size="xs"
       onClick={handleCopy}
     >
       <Copy className="size-3" />

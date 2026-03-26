@@ -24,7 +24,7 @@ export function LibraryPicker({ library }: LibraryPickerProps) {
       <div className="flex items-center gap-1.5">
         <span className="text-xs font-medium text-foreground">{library.provider}</span>
         <a href={library.docsUrl} target="_blank" rel="noopener noreferrer">
-          <Button variant="ghost" size="icon" className="size-5 h-5 w-5">
+          <Button variant="ghost" size="icon-xs">
             <ExternalLink className="size-3 text-muted-foreground" />
           </Button>
         </a>
