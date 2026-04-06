@@ -1,31 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useTemplatesStore } from "@/store/templates-store";
-import { Loader2, Trash2, Shield, Code, Info } from "lucide-react";
+import { useSiteScriptsQuery, useRemoveScript } from "@/hooks/use-site-scripts";
+import { Loader2, Trash2, Shield, Code } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 
 export function SiteScriptsPanel({ siteId }: { siteId: string }) {
-  const { installedScripts, fetchInstalledScripts, removeScriptFromSite } = useTemplatesStore();
-  const [loading, setLoading] = useState(true);
+  const { data: installedScripts = [], isLoading } = useSiteScriptsQuery(siteId);
+  const removeScript = useRemoveScript(siteId);
 
-  useEffect(() => {
-    const load = async () => {
-      setLoading(true);
-      await fetchInstalledScripts(siteId);
-      setLoading(false);
-    };
-    load();
-  }, [siteId, fetchInstalledScripts]);
-
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center py-12">
         <Loader2 className="size-5 animate-spin text-muted-foreground" />
@@ -74,42 +58,27 @@ export function SiteScriptsPanel({ siteId }: { siteId: string }) {
               <div className="flex flex-col gap-0.5 overflow-hidden">
                 <div className="flex items-center gap-1.5 overflow-hidden">
                   <span className="text-sm font-medium text-foreground/90 truncate">
-                    {script.id.split('-').map((word: string) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+                    {script.id.split("-").map((word: string) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")}
                   </span>
                   <Badge className="text-[9px] h-3.5 px-1 bg-white/10">
                     v{script.version}
                   </Badge>
                 </div>
-                
               </div>
             </div>
 
             <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
-                  <span className="capitalize">{script.location} Location</span>
-                  {/* <span className="text-white/10">•</span>
-                  <TooltipProvider delayDuration={0}>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <button className="flex items-center gap-1 hover:text-foreground transition-colors cursor-help">
-                          <Info className="size-2.5" />
-                          <span>Details</span>
-                        </button>
-                      </TooltipTrigger>
-                      <TooltipContent side="bottom" className="bg-popover border border-border">
-                        ID: {script.id}
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider> */}
-                  <Button
-              variant="ghost"
-              size="icon"
-              className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 opacity-0 group-hover:opacity-100 transition-all duration-300"
-              onClick={() => removeScriptFromSite(siteId, script.id)}
-            >
-              <Trash2 className="size-3.5" />
-            </Button>
-                </div>
-            
+              <span className="capitalize">{script.location} Location</span>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 opacity-0 group-hover:opacity-100 transition-all duration-300"
+                onClick={() => removeScript.mutate(script.id)}
+                disabled={removeScript.isPending}
+              >
+                <Trash2 className="size-3.5" />
+              </Button>
+            </div>
           </div>
         ))}
       </div>

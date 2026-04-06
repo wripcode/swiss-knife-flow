@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { AttributeRow } from "./attribute-row";
 import { useNotify } from "@/hooks/use-notify";
+import { useAddScript } from "@/hooks/use-site-scripts";
 import type { TemplatesCategory, TemplatesAttribute, Requirement } from "@/lib/attributes/schema";
 
 const REQUIREMENT_ORDER: Requirement[] = ["must-have", "optional", "logic"];
@@ -38,15 +39,20 @@ function CategoryRow({ category, siteId }: CategoryRowProps) {
     toggleCategory,
     applyAttribute,
     selectedValues,
-    addScriptToSite,
-    scriptStatuses,
     library,
   } = useTemplatesStore();
   const notify = useNotify();
+  const addScript = useAddScript(siteId ?? "");
   const isExpanded = expandedCategories.has(category.id);
   const grouped = useMemo(() => groupByRequirement(category.attributes), [category.attributes]);
 
-  const scriptStatus = scriptStatuses[category.id] ?? "idle";
+  const scriptStatus = addScript.isPending
+    ? "adding"
+    : addScript.isSuccess
+    ? "added"
+    : addScript.isError
+    ? "error"
+    : "idle";
 
   const handleAddAll = () => {
     for (const attr of category.attributes) {
@@ -62,12 +68,19 @@ function CategoryRow({ category, siteId }: CategoryRowProps) {
       notify({ type: "Error", message: "Site ID not available. Make sure you're inside Webflow." });
       return;
     }
-    addScriptToSite(siteId, category.id);
+    const scriptSource = category.cdn ?? library?.script;
+    if (!scriptSource) return;
+    addScript.mutate({
+      hostedLocation: scriptSource.hostedLocation as string,
+      integrityHash: scriptSource.integrityHash as string,
+      version: scriptSource.version,
+      displayName: scriptSource.displayName,
+      canCopy: true,
+    });
   };
 
   const scriptIcon = {
     idle: <Download className="size-3" />,
-    checking: <Loader2 className="size-3 animate-spin" />,
     adding: <Loader2 className="size-3 animate-spin" />,
     added: <CheckCircle className="size-3 text-green-400" />,
     error: <AlertCircle className="size-3 text-red-400" />,
@@ -77,7 +90,6 @@ function CategoryRow({ category, siteId }: CategoryRowProps) {
 
   const scriptLabel = {
     idle: `Add ${cdnLabel}`,
-    checking: "Checking…",
     adding: "Adding…",
     added: `${cdnLabel} Added`,
     error: "Failed — Retry",
@@ -118,7 +130,7 @@ function CategoryRow({ category, siteId }: CategoryRowProps) {
                   : "bg-white/5 hover:bg-white/10 border-white/10"
               }`}
               onClick={handleAddScript}
-              disabled={scriptStatus === "checking" || scriptStatus === "adding"}
+              disabled={scriptStatus === "adding"}
             >
               {scriptIcon}
               <span className="text-xs font-semibold">{scriptLabel}</span>

@@ -1,34 +1,20 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { Suspense } from "react";
 import { SitesList } from "@/components/dashboard/sites-list";
 import { Loader2 } from "lucide-react";
+import { useAuthQuery } from "@/hooks/use-auth-query";
+import { useUserQuery } from "@/hooks/use-user-query";
 
 function WelcomeSection() {
-  const [userName, setUserName] = useState("");
-
-  useEffect(() => {
-    async function fetchUser() {
-      try {
-        const response = await fetch("/api/user");
-        if (response.ok) {
-          const data = await response.json();
-          if (data?.user?.firstName) {
-            setUserName(data.user.firstName);
-          }
-        }
-      } catch (error) {
-        console.error("Failed to fetch user details:", error);
-      }
-    }
-    fetchUser();
-  }, []);
+  const { authenticated } = useAuthQuery();
+  const { data: user } = useUserQuery(authenticated);
 
   return (
     <div className="flex flex-col gap-1">
       <h1 className="text-base font-semibold tracking-tight">
-        {userName ? `Welcome back, ${userName}! 👋` : "Welcome"}
-    </h1>
+        {user?.firstName ? `Welcome back, ${user.firstName}! 👋` : "Welcome"}
+      </h1>
     </div>
   );
 }

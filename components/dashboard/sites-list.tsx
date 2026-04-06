@@ -17,8 +17,8 @@ import { useState, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { useSites } from "@/hooks/use-sites";
-import { useAuth } from "@/hooks/use-auth";
+import { useSitesQuery } from "@/hooks/use-sites-query";
+import { useAuthQuery } from "@/hooks/use-auth-query";
 import { ConnectButton } from "@/components/dashboard/connect-button";
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
@@ -200,8 +200,8 @@ function SiteCard({ site, isActive }: {
 }
 
 export function SitesList() {
-    const { authenticated, loading: authLoading } = useAuth();
-    const { sites, loading: sitesLoading, error, refresh } = useSites(authenticated);
+    const { authenticated, loading: authLoading } = useAuthQuery();
+    const { sites, loading: sitesLoading, error, refresh } = useSitesQuery(authenticated);
     const searchParams = useSearchParams();
     const activeSiteId = searchParams.get("siteId");
 

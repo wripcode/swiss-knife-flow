@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { DashboardSidebar } from "@/components/dashboard/sidebar";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { AppFooter } from "@/components/dashboard/footer";
@@ -10,7 +11,9 @@ export default function AppShellLayout({
 }) {
   return (
     <SidebarProvider className="bg-sidebar">
-      <DashboardSidebar />
+      <Suspense>
+        <DashboardSidebar />
+      </Suspense>
       <div className="h-svh overflow-hidden p-2 w-full min-w-0">
         <div className="border rounded-md overflow-hidden flex flex-col h-full w-full bg-background min-w-0">
           <DashboardHeader />

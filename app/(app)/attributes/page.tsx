@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { onExtensionMessage } from "@/lib/message-bus";
 import { useFooterStore } from "@/store/footer-store";
 import { useAttributesStore } from "@/store/attributes-store";
@@ -67,7 +67,9 @@ export default function CustomAttributesPage() {
         </TabsContent>
 
         <TabsContent value="templates" className="mt-0 h-full flex-1 min-h-0 flex flex-col outline-none data-[state=inactive]:hidden border-none p-0">
-          <TemplatesPanel />
+          <Suspense>
+            <TemplatesPanel />
+          </Suspense>
         </TabsContent>
       </Tabs>
     </ToolLayout>

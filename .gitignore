@@ -39,3 +39,4 @@ dev-data
 
 # LevelDB
 data/
+.tokenos/

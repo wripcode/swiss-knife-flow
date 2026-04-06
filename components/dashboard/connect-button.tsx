@@ -2,13 +2,13 @@
 
 import { Check, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/hooks/use-auth";
+import { useAuthQuery } from "@/hooks/use-auth-query";
 
 /**
  * Button that initiates the OAuth flow or shows connection status
  */
 export function ConnectButton() {
-    const { authenticated, loading, connectUrl } = useAuth();
+    const { authenticated, loading, connectUrl } = useAuthQuery();
 
     if (loading) {
         return (
