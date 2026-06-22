@@ -33,10 +33,6 @@ export async function GET(request: NextRequest) {
 
         await storeToken(token);
 
-        if (process.env.NODE_ENV === "development") {
-            console.log("\n✅ Webflow Access Token Received\n");
-        }
-
         return NextResponse.redirect(new URL("/auth/done", request.url));
     } catch (err) {
         console.error("Auth callback error:", err);

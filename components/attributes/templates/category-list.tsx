@@ -101,21 +101,24 @@ function CategoryRow({ category, siteId }: CategoryRowProps) {
         onClick={() => toggleCategory(category.id)}
         className="flex items-center justify-between w-full px-4 py-3 text-left group-hover:bg-white/2 transition-colors"
       >
-        <div className="flex items-center gap-3">
-          <div className={`p-1 rounded-md transition-all duration-300 ${isExpanded ? 'bg-primary/20 text-primary' : 'bg-white/5 text-muted-foreground'}`}>
-            <ChevronRight
-              className={`size-3.5 transition-transform duration-300 ${isExpanded ? "rotate-90" : ""}`}
-            />
-          </div>
-          <div className="flex flex-col gap-0.5">
-            <span className="text-sm font-medium text-foreground/90 tracking-tight">{category.label}</span>
-            <div className="flex items-center gap-2">
-              <Badge variant="secondary" className="rounded-full px-1.5 font-normal py-0 h-4 text-[9px] bg-white/5 text-muted-foreground border-none">
-                {category.attributes.length} attributes
-              </Badge>
-            </div>
-          </div>
-        </div>
+        <div className="flex items-center justify-between gap-3 w-full">
+  {/* Left Side: Icon and Text */}
+  <div className="flex items-center gap-3">
+    <div className={`p-1 rounded-md transition-all duration-300 ${isExpanded ? 'bg-primary/20 text-primary' : 'bg-white/5 text-muted-foreground'}`}>
+      <ChevronRight
+        className={`size-3.5 transition-transform duration-300 ${isExpanded ? "rotate-90" : ""}`}
+      />
+    </div>
+    <span className="text-sm font-medium text-foreground/90 tracking-tight">
+      {category.label}
+    </span>
+  </div>
+
+  {/* Right Side: Badge */}
+  <Badge variant="secondary" className="rounded-full px-1.5 font-normal py-0 h-4 text-[9px] bg-white/5 text-muted-foreground border-none shrink-0">
+    {category.attributes.length} attributes
+  </Badge>
+</div>
       </button>
 
       {isExpanded && (
@@ -133,7 +136,7 @@ function CategoryRow({ category, siteId }: CategoryRowProps) {
               disabled={scriptStatus === "adding"}
             >
               {scriptIcon}
-              <span className="text-xs font-semibold">{scriptLabel}</span>
+              <span className="text-xs">{scriptLabel}</span>
             </Button>
             <Button
               variant="outline"
@@ -142,7 +145,7 @@ function CategoryRow({ category, siteId }: CategoryRowProps) {
               onClick={handleAddAll}
             >
               <Plus className="size-3.5" />
-              <span className="text-xs font-semibold">Add Must-Haves</span>
+              <span className="text-xs">Add Must-Haves</span>
             </Button>
           </div>
 

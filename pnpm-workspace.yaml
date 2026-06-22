@@ -1,3 +1,9 @@
+allowBuilds:
+  classic-level: true
+  esbuild: true
+  sharp: true
+  unrs-resolver: true
+
 onlyBuiltDependencies:
   - classic-level
   - sharp

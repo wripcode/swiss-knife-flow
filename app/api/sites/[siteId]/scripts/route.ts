@@ -19,8 +19,6 @@ export async function POST(req: NextRequest, { params }: RouteParams) {
   const { siteId } = await params;
   try {
     const body = await req.json();
-    console.log(`[API] Registering script for site ${siteId}:`, body);
-    
     const webflow = await getWebflowClient();
     const result = await webflow.scripts.registerHosted(siteId, {
       hostedLocation: body.hostedLocation,
@@ -29,8 +27,6 @@ export async function POST(req: NextRequest, { params }: RouteParams) {
       version: body.version,
       displayName: body.displayName,
     });
-    
-    console.log(`[API] Script registered successfully:`, result);
     return NextResponse.json({ data: result }, { status: 201 });
   } catch (error: any) {
     console.error(`[API] Script registration failed for site ${siteId}:`, {

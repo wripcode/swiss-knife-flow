@@ -21,11 +21,7 @@ export function ConnectButton() {
 
     if (authenticated) {
         return (
-            <Button
-                variant="default"
-                size="sm"
-                disabled
-            >
+            <Button variant="default" size="sm" disabled>
                 <Check className="size-3.5" />
                 Connected to Webflow
             </Button>
@@ -40,4 +36,5 @@ export function ConnectButton() {
         </Button>
     );
 }
+
 

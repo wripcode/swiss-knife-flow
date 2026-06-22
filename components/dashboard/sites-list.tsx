@@ -230,6 +230,13 @@ export function SitesList() {
         );
     }
 
+    const currentProjectMissing =
+        !sitesLoading &&
+        !error &&
+        !!activeSiteId &&
+        sites.length > 0 &&
+        !sites.some((s) => s.id === activeSiteId);
+
     return (
         <div className="flex flex-col gap-3">
             <div className="flex items-center justify-between">
@@ -250,6 +257,17 @@ export function SitesList() {
                     <RefreshCcw className={`size-3.5 ${sitesLoading ? "animate-spin" : ""}`} />
                 </Button>
             </div>
+
+            {currentProjectMissing && (
+                <div className="rounded-md border border-amber-500/30 bg-amber-500/5 p-3 flex flex-col gap-1">
+                    <p className="text-[11px] font-medium text-amber-400">
+                        Current project not found
+                    </p>
+                    <p className="text-[11px] text-muted-foreground leading-relaxed">
+                        This project may not be in your connected workspace.
+                    </p>
+                </div>
+            )}
 
             {sitesLoading && (
                 <div className="flex items-center gap-2 py-8 justify-center text-muted-foreground">
@@ -290,4 +308,3 @@ export function SitesList() {
         </div>
     );
 }
-

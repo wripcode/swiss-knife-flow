@@ -14,6 +14,11 @@ import { SiteScriptsPanel } from "./site-scripts-panel";
 export function TemplatesPanel() {
   const searchParams = useSearchParams();
   const { siteId: storedSiteId, setSiteId } = useSiteStore();
+  const [isMounted, setIsMounted] = useState(false);
+  
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
   
   useEffect(() => {
     const siteIdFromParam = searchParams.get("siteId");
@@ -29,6 +34,14 @@ export function TemplatesPanel() {
   useEffect(() => {
     if (activeLibraryId && !library && !loading) load(activeLibraryId);
   }, [library, activeLibraryId, loading, load]);
+
+  if (!isMounted) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <Loader2 className="size-5 text-muted-foreground animate-spin" />
+      </div>
+    );
+  }
 
   if (!siteId) {
     return (

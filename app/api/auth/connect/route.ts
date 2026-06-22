@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import { getAuthorizeURL } from "@/lib/auth-client/oauth";
 
 /**
- * GET /api/auth/webflow
- * Redirects user to Webflow's OAuth authorization page
+ * GET /api/auth/connect
+ * Redirects user to Webflow's OAuth authorization page.
  */
 export async function GET() {
     const clientId = process.env.WEBFLOW_CLIENT_ID;
