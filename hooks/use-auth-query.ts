@@ -3,10 +3,14 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { queryKeys } from "@/lib/query-keys";
+import { ApiError } from "@/lib/api-error";
 
 async function fetchAuthStatus(): Promise<{ authenticated: boolean }> {
   const response = await fetch("/api/auth/status");
-  if (!response.ok) throw new Error("Failed to check authentication status");
+  if (!response.ok) {
+    const body = await response.json().catch(() => ({}));
+    throw new ApiError(body.message || "Failed to check authentication status", response.status);
+  }
   return response.json();
 }
 
@@ -18,7 +22,7 @@ export function useAuthQuery() {
     queryFn: fetchAuthStatus,
     staleTime: 30_000,
     gcTime: 5 * 60 * 1000,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
     select: (data) => data.authenticated,
   });
 

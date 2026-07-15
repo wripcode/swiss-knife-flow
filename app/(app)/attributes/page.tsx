@@ -8,7 +8,9 @@ import { ToolLayout } from "@/components/dashboard/tool-layout";
 import { AttributesManagePanel } from "@/components/attributes/attributes-manage-panel";
 import { AttributesListPanel } from "@/components/attributes/attributes-list-panel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TemplatesPanel } from "@/components/attributes/templates/templates-panel";
+import dynamic from "next/dynamic";
+
+const TemplatesPanel = dynamic(() => import("@/components/attributes/templates/templates-panel").then(mod => mod.TemplatesPanel));
 
 export default function CustomAttributesPage() {
   const { setFooterGuide, clearFooterGuide } = useFooterStore();

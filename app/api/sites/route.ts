@@ -1,37 +1,11 @@
 import { NextResponse } from "next/server";
-import { getWebflowClient } from "@/lib/auth-client/client";
+import { withAuth } from "@/lib/api/with-auth";
 
 /**
  * GET /api/sites
  * Lists all Webflow sites accessible to the authenticated user.
  */
-export async function GET() {
-    try {
-        const webflow = await getWebflowClient();
-        const sites = await webflow.sites.list();
-
-        return NextResponse.json({ data: sites });
-    } catch (error: unknown) {
-        console.error("Sites API Error:", error);
-
-        const statusCode =
-            error && typeof error === "object" && "statusCode" in error
-                ? (error as { statusCode: number }).statusCode
-                : null;
-
-        const message =
-            error instanceof Error ? error.message : "Failed to fetch sites";
-
-        if (statusCode === 401 || message.includes("Not authenticated")) {
-            return NextResponse.json(
-                { error: "Not authenticated", message: "Please connect with Webflow first" },
-                { status: 401 }
-            );
-        }
-
-        return NextResponse.json(
-            { error: "Server error", message },
-            { status: 500 }
-        );
-    }
-}
+export const GET = withAuth(async (client) => {
+  const sites = await client.sites.list();
+  return NextResponse.json({ data: sites });
+});
