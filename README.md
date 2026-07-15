@@ -52,7 +52,7 @@ This is a **pnpm monorepo** with two packages:
 
 | Package | Description |
 | --- | --- |
-| **Root** | Next.js 16 web app — dashboard UI, API backend, OAuth flow |
+| **Root** | Next.js 16.3 (preview) web app — dashboard UI, API backend, OAuth flow |
 | **`extension/`** | Vite + React — runs as a Webflow Designer Extension iframe |
 
 The two packages communicate via `postMessage` using a typed protocol defined in `lib/message-bus.ts`. See [`dev-data/ARCHITECTURE.md`](./dev-data/ARCHITECTURE.md) for the full architectural overview.
@@ -110,12 +110,13 @@ lib/
   utils.ts                        # cn() helper (clsx + tailwind-merge)
 
 hooks/
-  use-auth-query.ts               # Polls /api/auth/status; exposes { authenticated, isLoading }
+  use-auth-query.ts               # Fetches /api/auth/status; exposes { authenticated, isLoading }
   use-sites-query.ts              # Fetches /api/sites when authenticated
   use-user-query.ts               # Fetches /api/user — user profile info
   use-site-scripts.ts             # useSiteScriptsQuery, useAddScript, useRemoveScript mutations
   use-notify.ts                   # Toast/notification helper
   use-mobile.ts                   # Breakpoint detection hook
+  use-copy-to-clipboard.ts        # Clipboard hook with textarea fallback + isCopied state
 
 store/                            # Zustand stores — UI state only, zero server state
   attributes-store.ts             # Element groups, search query, editing state, bulk mode toggles
