@@ -82,7 +82,8 @@ User clicks "Connect with Webflow"
 The stored token is a long-lived Webflow access token. It is:
 - Read by `getWebflowClient()` in `lib/auth-client/client.ts` before every API call
 - Validated against Webflow on every `GET /api/auth/status` call (stale tokens are auto-deleted)
-- Deleted on explicit disconnect or on a 401 from Webflow
+
+**API Route Security (`withAuth`)**: Every API route that calls Webflow APIs must be wrapped in `withAuth` from `lib/api/with-auth.ts`. This centralized wrapper ensures that any 401 Unauthorized error from Webflow immediately deletes the stale token and returns a standardized JSON error format.
 
 **LevelDB (`lib/db/token-store.ts`):** A three-function wrapper (`storeToken`, `getToken`, `deleteToken`) around a single LevelDB instance. The singleton pattern ensures the database file is opened exactly once, even across concurrent serverless function invocations. No schema, no relations — it's a single key-value store.
 
@@ -105,6 +106,8 @@ No exceptions. Zustand stores hold zero server state.
 | `useUserQuery` | `GET /api/user` | 10min |
 | `useSitesQuery` | `GET /api/sites` | 2min |
 | `useSiteScriptsQuery` | `GET /api/sites/:id/custom-code` | 30s |
+
+**Reactive Auth & Global Interceptors**: Because `refetchOnWindowFocus` doesn't fire inside the Webflow Designer iframe, auth freshness is reactive. All API fetchers throw an `ApiError` (`lib/api-error.ts`) which preserves HTTP status codes. The global `QueryCache` and `MutationCache` `onError` handlers in `components/query-provider.tsx` intercept any 401 status and instantly invalidate the auth query, forcing the UI back to the connect prompt without polling.
 
 All query keys are defined in `lib/query-keys.ts`. Never hardcode a raw array key.
 

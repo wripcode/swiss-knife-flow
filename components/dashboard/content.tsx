@@ -31,9 +31,6 @@ export function DashboardContent() {
           <div className="lg:col-span-2">
             <TodaysTasks />
           </div>
-          <div>
-            <PerformanceChart />
-          </div>
         </div>
         <ProjectsTable /> */}
       </div>
