@@ -2,6 +2,7 @@
 
 import { useTemplatesStore } from "@/store/templates-store";
 import { useNotify } from "@/hooks/use-notify";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -27,6 +28,7 @@ const REQUIREMENT_STYLES: Record<Requirement, string> = {
 export function AttributeRow({ attribute }: AttributeRowProps) {
   const { selectedValues, selectValue, applyAttribute } = useTemplatesStore();
   const notify = useNotify();
+  const { copyToClipboard } = useCopyToClipboard();
   const currentValue = selectedValues[attribute.key] ?? attribute.valueOptions?.[0] ?? "";
 
   const handleAdd = () => {
@@ -35,19 +37,7 @@ export function AttributeRow({ attribute }: AttributeRowProps) {
   };
 
   const handleCopyKey = () => {
-    try {
-      document.execCommand("copy");
-    } catch {
-      /* noop */
-    }
-    const el = document.createElement("textarea");
-    el.value = attribute.key;
-    el.style.position = "fixed";
-    el.style.opacity = "0";
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand("copy");
-    document.body.removeChild(el);
+    copyToClipboard(attribute.key);
     notify({ type: "Info", message: `Copied "${attribute.key}"` });
   };
 
@@ -105,17 +95,11 @@ interface CopyScriptButtonProps {
 
 export function CopyScriptButton({ script }: CopyScriptButtonProps) {
   const notify = useNotify();
+  const { copyToClipboard } = useCopyToClipboard();
 
   const handleCopy = () => {
     const tag = `<script async src="${script}"></script>`;
-    const el = document.createElement("textarea");
-    el.value = tag;
-    el.style.position = "fixed";
-    el.style.opacity = "0";
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand("copy");
-    document.body.removeChild(el);
+    copyToClipboard(tag);
     notify({ type: "Success", message: "Script tag copied to clipboard" });
   };
 

@@ -33,8 +33,7 @@ interface AttributesStore {
   removeAttribute: (name: string, elementId: string) => void;
   selectElement: (elementId: string) => void;
 
-  getFilteredGroups: () => ElementAttributeGroup[];
-  getTotalAttributeCount: () => number;
+
 }
 
 export const useAttributesStore = create<AttributesStore>((set, get) => ({
@@ -72,24 +71,5 @@ export const useAttributesStore = create<AttributesStore>((set, get) => ({
     postToExtension("SELECT_ELEMENT", { elementId });
   },
 
-  getFilteredGroups: () => {
-    const { elementGroups, searchQuery } = get();
-    if (!searchQuery) return elementGroups;
 
-    const q = searchQuery.toLowerCase();
-    return elementGroups
-      .map((group) => ({
-        ...group,
-        attributes: group.attributes.filter(
-          (attr) =>
-            attr.name.toLowerCase().includes(q) ||
-            attr.value.toLowerCase().includes(q)
-        ),
-      }))
-      .filter((group) => group.attributes.length > 0);
-  },
-
-  getTotalAttributeCount: () => {
-    return get().elementGroups.reduce((sum, g) => sum + g.attributes.length, 0);
-  },
 }));

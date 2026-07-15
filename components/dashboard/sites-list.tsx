@@ -17,6 +17,7 @@ import { useState, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { useSitesQuery } from "@/hooks/use-sites-query";
 import { useAuthQuery } from "@/hooks/use-auth-query";
 import { ConnectButton } from "@/components/dashboard/connect-button";
@@ -33,29 +34,12 @@ function formatDate(dateStr?: string) {
 }
 
 function CopyButton({ value }: { value: string }) {
-    const [copied, setCopied] = useState(false);
+    const { isCopied, copyToClipboard } = useCopyToClipboard();
 
-    const handleCopy = useCallback((e: React.MouseEvent) => {
+    const handleCopy = (e: React.MouseEvent) => {
         e.stopPropagation();
-        const done = () => {
-            setCopied(true);
-            setTimeout(() => setCopied(false), 1500);
-        };
-
-        try {
-            const el = document.createElement("textarea");
-            el.value = value;
-            el.style.cssText = "position:fixed;top:-9999px;left:-9999px;opacity:0";
-            document.body.appendChild(el);
-            el.focus();
-            el.select();
-            document.execCommand("copy");
-            document.body.removeChild(el);
-            done();
-        } catch {
-            navigator.clipboard?.writeText(value).then(done).catch(() => {});
-        }
-    }, [value]);
+        copyToClipboard(value);
+    };
 
     return (
         <button
@@ -63,7 +47,7 @@ function CopyButton({ value }: { value: string }) {
             className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground"
             title="Copy to clipboard"
         >
-            {copied
+            {isCopied
                 ? <Check className="size-3 text-primary" />
                 : <Copy className="size-3" />
             }
